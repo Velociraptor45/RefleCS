@@ -2,8 +2,7 @@
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using RefleCS;
+using RefleCS.Converters;
 
 Console.WriteLine("Hello, World!");
 
@@ -20,39 +19,13 @@ public class App
     public int Id { get; set; }
 }";
 
+var csFileConverter = new CsFileConverter();
+
 var tree = CSharpSyntaxTree.ParseText(content);
-var root = tree.GetRoot();
-var nmsp = root.DescendantNodes().OfType<FileScopedNamespaceDeclarationSyntax>().First();
+var file = csFileConverter.ToCsFile(tree);
 
-var classes = new List<Class>();
-foreach (var cls in nmsp.DescendantNodes().OfType<ClassDeclarationSyntax>())
-{
-    var properties = new List<Property>();
-    foreach (var property in cls.DescendantNodes().OfType<PropertyDeclarationSyntax>())
-    {
-        var typeName = ((PredefinedTypeSyntax)property.Type).Keyword.Text;
-        var accessors = new List<Accessor>();
-        foreach (var accessor in property.AccessorList.Accessors)
-        {
-            accessors.Add(accessor.Kind() == SyntaxKind.GetAccessorDeclaration
-                ? Accessor.Get
-                : Accessor.Set);
-        }
-        properties.Add(new Property(typeName, property.Identifier.ToString(), accessors));
-    }
+var text = csFileConverter.ToNode(file).SyntaxTree.GetRoot().NormalizeWhitespace().GetText();
 
-    classes.Add(new Class(cls.Identifier.ToString(), properties));
-}
-var file = new CsFile(new Namespace(nmsp.Name.ToString(), classes));
-
-//tree.GetRoot();
-
-//tree.GetRoot()
-//.DescendantNodes().ToList().Add(new NamespaceDeclarationSyntax())
-
-var x = file.ToNode();
-var text = x.SyntaxTree.GetRoot().NormalizeWhitespace().GetText();
-
-File.WriteAllText(@"C:\Users\veloc\Documents\Projekte\RefleCS\mycsfile.cs", text.ToString());
+File.WriteAllText(@"H:\Programming\Repositories\RefleCS\RefleCS\mycsfile.cs", text.ToString());
 
 Console.WriteLine("");
