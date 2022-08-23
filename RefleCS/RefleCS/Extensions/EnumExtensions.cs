@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using Microsoft.CodeAnalysis.CSharp;
+using RefleCS.Attributes;
+using System.Reflection;
 
 namespace RefleCS.Extensions;
 
@@ -15,5 +17,10 @@ internal static class EnumExtensions
             throw new InvalidOperationException($"Attribute {name} on enum {value} of {type} not found.");
 
         return attribute;
+    }
+
+    public static SyntaxKind GetSyntaxKind<T>(this T modifier) where T : Enum
+    {
+        return modifier.GetAttribute<SyntaxKindAttribute>().SyntaxKind;
     }
 }

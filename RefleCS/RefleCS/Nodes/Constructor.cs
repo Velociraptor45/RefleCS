@@ -4,7 +4,8 @@ namespace RefleCS.Nodes;
 
 public class Constructor
 {
-    public Constructor(IEnumerable<Modifier> modifiers, string identifier, IEnumerable<Parameter> parameters, IEnumerable<Statement> statements)
+    public Constructor(IEnumerable<ConstructorModifier> modifiers, string identifier, IEnumerable<Parameter> parameters,
+        IEnumerable<Statement> statements)
     {
         Identifier = identifier;
         Modifiers = modifiers.ToList();
@@ -12,7 +13,7 @@ public class Constructor
         Parameters = parameters.ToList();
     }
 
-    public IReadOnlyCollection<Modifier> Modifiers { get; }
+    public IReadOnlyCollection<ConstructorModifier> Modifiers { get; }
     public string Identifier { get; }
     public IReadOnlyCollection<Parameter> Parameters { get; }
     public IReadOnlyCollection<Statement> Statements { get; }

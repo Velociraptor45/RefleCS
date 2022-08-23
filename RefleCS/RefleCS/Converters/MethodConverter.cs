@@ -12,7 +12,7 @@ internal class MethodConverter
 
     public Method ToMethod(MethodDeclarationSyntax method)
     {
-        var modifiers = _modifierConverter.ToModifier(method.Modifiers);
+        var modifiers = _modifierConverter.ToMethodModifier(method.Modifiers);
         var parameters = _parameterConverter.ToParameter(method.ParameterList.Parameters);
         var statements = _statementConverter.ToStatement(method.Body.Statements);
 

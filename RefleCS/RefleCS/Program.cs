@@ -7,18 +7,22 @@ using RefleCS.Converters;
 Console.WriteLine("Hello, World!");
 
 var content = @"using System;
+using System.Linq;
+
 namespace MyApp;
 
-public class App
+public sealed class App
 {
-    public App(int? id)
+    public App(int? id, IEnumerable<int> enumerables)
     {
         Id = id.Value;
+        Ens = enumerables.ToList();
     }
 
-    public int Id { get; set; }
+    public protected int Id { get; set; }
+    public IReadOnlyCollection<int> Ens { get; }
 
-    public bool? CheckIfTrue(bool bl)
+    public async bool? CheckIfTrue(bool bl, out int x)
     {
         return bl;
     }
@@ -34,3 +38,10 @@ var text = csFileConverter.ToNode(file).SyntaxTree.GetRoot().NormalizeWhitespace
 File.WriteAllText(@"H:\Programming\Repositories\RefleCS\RefleCS\mycsfile.cs", text.ToString());
 
 Console.WriteLine("");
+
+/*
+ * TODO
+ * - file-scoped namespace
+ * - comment/annotation
+ * - add method
+ */

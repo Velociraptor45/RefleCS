@@ -6,9 +6,13 @@ namespace RefleCS.Converters;
 
 internal class ParameterConverter
 {
+    private readonly ModifierConverter _modifierConverter = new();
+
     public Parameter ToParameter(ParameterSyntax parameter)
     {
-        return new Parameter(parameter.Type.ToString(), parameter.Identifier.ToString());
+        var modifiers = _modifierConverter.ToParameterModifier(parameter.Modifiers);
+
+        return new Parameter(modifiers, parameter.Type.ToString(), parameter.Identifier.ToString());
     }
 
     public IEnumerable<Parameter> ToParameter(IEnumerable<ParameterSyntax> parameters)
@@ -21,7 +25,10 @@ internal class ParameterConverter
 
     public ParameterSyntax ToNode(Parameter parameter)
     {
+        var modifiers = _modifierConverter.ToNode(parameter.Modifiers);
+
         return SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Identifier))
+            .WithModifiers(modifiers)
             .WithType(SyntaxFactory.ParseTypeName(parameter.TypeName));
     }
 

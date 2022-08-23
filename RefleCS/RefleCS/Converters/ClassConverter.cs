@@ -19,7 +19,7 @@ internal class ClassConverter
         var ctorDeclarations = classDeclaration.DescendantNodes().OfType<ConstructorDeclarationSyntax>();
         var ctors = _constructorConverter.ToConstructor(ctorDeclarations).ToList();
 
-        var modifiers = _modifierConverter.ToModifier(classDeclaration.Modifiers);
+        var modifiers = _modifierConverter.ToClassModifier(classDeclaration.Modifiers);
 
         var methodDeclarations = classDeclaration.DescendantNodes().OfType<MethodDeclarationSyntax>();
         var methods = _methodConverter.ToMethod(methodDeclarations);

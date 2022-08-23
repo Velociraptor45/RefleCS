@@ -11,12 +11,12 @@ internal class PropertyConverter
 
     public Property ToProperty(PropertyDeclarationSyntax property)
     {
-        var typeName = ((PredefinedTypeSyntax)property.Type).Keyword.Text;
+        var typeName = property.Type.ToString();
         var accessors = property.AccessorList.Accessors
             .Select(accessor => _accessorConverter.ToAccessor(accessor.Kind()))
             .ToList();
 
-        var modifiers = _modifierConverter.ToModifier(property.Modifiers);
+        var modifiers = _modifierConverter.ToPropertyModifier(property.Modifiers);
         return new Property(modifiers, typeName, property.Identifier.ToString(), accessors);
     }
 
@@ -30,7 +30,6 @@ internal class PropertyConverter
 
     public PropertyDeclarationSyntax ToNode(Property property)
     {
-        //var attr = SyntaxFactory.List<AttributeListSyntax>();
         var modifiers = _modifierConverter.ToNode(property.Modifiers);
         var accessors = _accessorConverter.ToNode(property.Accessors);
 

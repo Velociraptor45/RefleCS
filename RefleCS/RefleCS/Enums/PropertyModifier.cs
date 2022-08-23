@@ -3,7 +3,7 @@ using RefleCS.Attributes;
 
 namespace RefleCS.Enums;
 
-public enum Modifier
+public enum PropertyModifier
 {
     [SyntaxKind(SyntaxKind.PublicKeyword)]
     Public,

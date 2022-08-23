@@ -14,7 +14,7 @@ internal class ConstructorConverter
     {
         var statements = _statementConverter.ToStatement(ctorDeclaration.Body.Statements);
         var parameters = _parameterConverter.ToParameter(ctorDeclaration.ParameterList.Parameters);
-        var modifiers = _modifierConverter.ToModifier(ctorDeclaration.Modifiers);
+        var modifiers = _modifierConverter.ToConstructorModifier(ctorDeclaration.Modifiers);
 
         return new Constructor(modifiers, ctorDeclaration.Identifier.ValueText, parameters, statements);
     }

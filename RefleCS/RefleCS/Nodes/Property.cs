@@ -4,7 +4,7 @@ namespace RefleCS.Nodes;
 
 public class Property
 {
-    public Property(IEnumerable<Modifier> modifiers, string type, string name, IEnumerable<Accessor> accessors)
+    public Property(IEnumerable<PropertyModifier> modifiers, string type, string name, IEnumerable<Accessor> accessors)
     {
         Modifiers = modifiers.ToList();
         TypeName = type;
@@ -12,7 +12,7 @@ public class Property
         Accessors = accessors.ToList();
     }
 
-    public IReadOnlyCollection<Modifier> Modifiers { get; }
+    public IReadOnlyCollection<PropertyModifier> Modifiers { get; }
     public string TypeName { get; }
     public string Name { get; }
     public IReadOnlyCollection<Accessor> Accessors { get; }
