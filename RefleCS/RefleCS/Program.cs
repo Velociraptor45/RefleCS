@@ -41,7 +41,6 @@ Console.WriteLine("");
 
 /*
  * TODO
- * - file-scoped namespace
  * - comment/annotation
  * - add method
  */

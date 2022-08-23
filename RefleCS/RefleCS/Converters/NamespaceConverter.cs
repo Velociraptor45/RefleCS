@@ -17,11 +17,11 @@ internal class NamespaceConverter
         return new Namespace(nmsp.Name.ToString(), classes);
     }
 
-    public NamespaceDeclarationSyntax ToNode(Namespace nmsp)
+    public FileScopedNamespaceDeclarationSyntax ToNode(Namespace nmsp)
     {
         var classes = _classConverter.ToNode(nmsp.Classes);
 
-        return SyntaxFactory.NamespaceDeclaration(SyntaxFactory.IdentifierName(nmsp.Name))
+        return SyntaxFactory.FileScopedNamespaceDeclaration(SyntaxFactory.IdentifierName(nmsp.Name))
             .AddMembers(classes.ToArray());
     }
 }
