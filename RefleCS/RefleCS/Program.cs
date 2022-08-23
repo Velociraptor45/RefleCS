@@ -11,12 +11,17 @@ namespace MyApp;
 
 public class App
 {
-    public App(int id)
+    public App(int? id)
     {
-        Id = id;
+        Id = id.Value;
     }
 
     public int Id { get; set; }
+
+    public bool? CheckIfTrue(bool bl)
+    {
+        return bl;
+    }
 }";
 
 var csFileConverter = new CsFileConverter();
