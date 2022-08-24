@@ -12,6 +12,9 @@ internal class ParameterConverter
     {
         var modifiers = _modifierConverter.ToParameterModifier(parameter.Modifiers);
 
+        if (parameter.Type is null)
+            throw new InvalidOperationException($"Parameter has no type: {parameter}");
+
         return new Parameter(modifiers, parameter.Type.ToString(), parameter.Identifier.ToString());
     }
 

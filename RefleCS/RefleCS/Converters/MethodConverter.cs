@@ -15,7 +15,9 @@ internal class MethodConverter
     {
         var modifiers = _modifierConverter.ToMethodModifier(method.Modifiers);
         var parameters = _parameterConverter.ToParameter(method.ParameterList.Parameters);
-        var statements = _statementConverter.ToStatement(method.Body.Statements);
+        var statements = method.Body is null
+            ? Enumerable.Empty<Statement>()
+            : _statementConverter.ToStatement(method.Body.Statements);
 
         var comments = method.GetLeadingTrivia()
             .Where(t => !string.IsNullOrWhiteSpace(t.ToString()))

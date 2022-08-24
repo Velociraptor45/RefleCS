@@ -74,8 +74,10 @@ internal class ModifierConverter
 
     private T ToModifier<T>(SyntaxToken modifier) where T : Enum
     {
-        // todo handle parsing failure
-        return (T)Enum.Parse(typeof(T), modifier.ValueText, true);
+        if (!Enum.TryParse(typeof(T), modifier.ValueText, true, out var result))
+            throw new InvalidOperationException($"Could not find {typeof(T).Name} for {modifier.ValueText}");
+
+        return (T)result!;
     }
 
     public SyntaxTokenList ToNode(IEnumerable<ClassModifier> modifiers)

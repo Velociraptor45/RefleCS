@@ -12,7 +12,9 @@ internal class ConstructorConverter
 
     public Constructor ToConstructor(ConstructorDeclarationSyntax ctorDeclaration)
     {
-        var statements = _statementConverter.ToStatement(ctorDeclaration.Body.Statements);
+        var statements = ctorDeclaration.Body is null
+            ? Enumerable.Empty<Statement>()
+            : _statementConverter.ToStatement(ctorDeclaration.Body.Statements);
         var parameters = _parameterConverter.ToParameter(ctorDeclaration.ParameterList.Parameters);
         var modifiers = _modifierConverter.ToConstructorModifier(ctorDeclaration.Modifiers);
 

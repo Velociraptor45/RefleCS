@@ -1,5 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using RefleCS.Enums;
 using RefleCS.Nodes;
 
 namespace RefleCS.Converters;
@@ -12,9 +13,10 @@ internal class PropertyConverter
     public Property ToProperty(PropertyDeclarationSyntax property)
     {
         var typeName = property.Type.ToString();
-        var accessors = property.AccessorList.Accessors
-            .Select(accessor => _accessorConverter.ToAccessor(accessor.Kind()))
-            .ToList();
+        var accessors = property.AccessorList is null
+            ? Enumerable.Empty<Accessor>()
+            : property.AccessorList.Accessors
+            .Select(accessor => _accessorConverter.ToAccessor(accessor.Kind()));
 
         var modifiers = _modifierConverter.ToPropertyModifier(property.Modifiers);
         return new Property(modifiers, typeName, property.Identifier.ToString(), accessors);
