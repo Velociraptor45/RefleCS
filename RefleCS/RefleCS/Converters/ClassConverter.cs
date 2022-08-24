@@ -10,6 +10,7 @@ internal class ClassConverter
     private readonly ConstructorConverter _constructorConverter = new();
     private readonly ModifierConverter _modifierConverter = new();
     private readonly MethodConverter _methodConverter = new();
+    private readonly BaseTypeConverter _baseTypeConverter = new();
 
     public Class ToClass(ClassDeclarationSyntax classDeclaration)
     {
@@ -24,7 +25,11 @@ internal class ClassConverter
         var methodDeclarations = classDeclaration.DescendantNodes().OfType<MethodDeclarationSyntax>();
         var methods = _methodConverter.ToMethod(methodDeclarations);
 
-        return new Class(modifiers, classDeclaration.Identifier.ToString(), ctors, properties, methods);
+        var baseTypes = classDeclaration.BaseList is null
+            ? Enumerable.Empty<BaseType>()
+            : _baseTypeConverter.ToBaseType(classDeclaration.BaseList);
+
+        return new Class(modifiers, classDeclaration.Identifier.ToString(), ctors, properties, methods, baseTypes);
     }
 
     public IEnumerable<Class> ToClass(IEnumerable<ClassDeclarationSyntax> classDeclarations)
@@ -41,8 +46,10 @@ internal class ClassConverter
         var properties = _propertyConverter.ToNode(cls.Properties);
         var modifiers = _modifierConverter.ToNode(cls.Modifiers);
         var methods = _methodConverter.ToNode(cls.Methods);
+        var baseTypes = _baseTypeConverter.ToNode(cls.BaseTypes);
 
         return SyntaxFactory.ClassDeclaration(cls.Name)
+            .AddBaseListTypes(baseTypes.ToArray())
             .AddModifiers(modifiers.ToArray())
             .AddMembers(ctors.ToArray())
             .AddMembers(properties.ToArray())

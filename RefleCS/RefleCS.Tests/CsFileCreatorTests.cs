@@ -61,7 +61,8 @@ public sealed class App
                                 })
                         },
                         new List<Property>(),
-                        new List<Method>())
+                        new List<Method>(),
+                        new List<BaseType>())
                 }));
 
         // Act
@@ -141,7 +142,8 @@ public sealed class App
                                 {
                                     new("return bl;")
                                 })
-                        })
+                        },
+                        new List<BaseType>())
                 }));
 
         // Act
@@ -210,6 +212,52 @@ public sealed class App
                                 {
                                     new("return bl;")
                                 })
+                        },
+                        new List<BaseType>())
+                }));
+
+        // Act
+        var result = new CsFileHandler().FromContent(content);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void FromContent_WithSuperclass_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = @$"using System;
+
+namespace MyApp;
+
+public sealed class App : AnotherApp<int>, IImplement
+{{
+}}";
+
+        var expectedResult = new CsFile(
+            new List<Using>
+            {
+                new("System")
+            },
+            new Namespace(
+                "MyApp",
+                new List<Class>
+                {
+                    new(
+                        new List<ClassModifier>
+                        {
+                            ClassModifier.Public,
+                            ClassModifier.Sealed
+                        },
+                        "App",
+                        new List<Constructor>(),
+                        new List<Property>(),
+                        new List<Method>(),
+                        new List<BaseType>
+                        {
+                            new("AnotherApp<int>"),
+                            new("IImplement")
                         })
                 }));
 
