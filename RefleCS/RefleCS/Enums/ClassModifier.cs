@@ -21,5 +21,8 @@ public enum ClassModifier
     Abstract,
 
     [SyntaxKind(SyntaxKind.SealedKeyword)]
-    Sealed
+    Sealed,
+
+    [SyntaxKind(SyntaxKind.StaticKeyword)]
+    Static
 }
