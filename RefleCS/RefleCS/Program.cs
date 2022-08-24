@@ -22,7 +22,12 @@ public sealed class App
     public protected int Id { get; set; }
     public IReadOnlyCollection<int> Ens { get; }
 
-    public async bool? CheckIfTrue(bool bl, out int x)
+    // my comment
+    // another comment ???
+    /*
+     * my other comment
+     */
+    void CheckIfTrue(bool bl, out int x)
     {
         return bl;
     }
@@ -41,6 +46,7 @@ Console.WriteLine("");
 
 /*
  * TODO
- * - comment/annotation
  * - add method
+ * - change to class lib
+ * - handle warnings
  */

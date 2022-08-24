@@ -39,11 +39,11 @@ internal class ClassConverter
     {
         var ctors = _constructorConverter.ToNode(cls.Constructors);
         var properties = _propertyConverter.ToNode(cls.Properties);
-        var modifieres = _modifierConverter.ToNode(cls.Modifiers);
+        var modifiers = _modifierConverter.ToNode(cls.Modifiers);
         var methods = _methodConverter.ToNode(cls.Methods);
 
         return SyntaxFactory.ClassDeclaration(cls.Name)
-            .AddModifiers(modifieres.ToArray())
+            .AddModifiers(modifiers.ToArray())
             .AddMembers(ctors.ToArray())
             .AddMembers(properties.ToArray())
             .AddMembers(methods.ToArray());
