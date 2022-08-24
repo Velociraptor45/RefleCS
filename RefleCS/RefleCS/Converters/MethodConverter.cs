@@ -55,7 +55,7 @@ internal class MethodConverter
             returnTypeToken = returnTypeToken.WithLeadingTrivia(comments);
         }
 
-        return SyntaxFactory.MethodDeclaration(returnTypeToken, method.Identifier)
+        return SyntaxFactory.MethodDeclaration(returnTypeToken, method.Name)
             .AddModifiers(modifiers.ToArray())
             .AddParameterListParameters(parameters.ToArray())
             .AddBodyStatements(statements.ToArray());

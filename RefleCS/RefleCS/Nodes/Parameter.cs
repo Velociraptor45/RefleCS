@@ -4,14 +4,14 @@ namespace RefleCS.Nodes;
 
 public class Parameter
 {
-    public Parameter(IEnumerable<ParameterModifier> modifiers, string typeName, string identifier)
+    public Parameter(IEnumerable<ParameterModifier> modifiers, string typeName, string name)
     {
         Modifiers = modifiers.ToList();
         TypeName = typeName;
-        Identifier = identifier;
+        Name = name;
     }
 
     public IReadOnlyCollection<ParameterModifier> Modifiers { get; }
     public string TypeName { get; }
-    public string Identifier { get; }
+    public string Name { get; }
 }

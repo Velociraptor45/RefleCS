@@ -27,7 +27,7 @@ internal class ParameterConverter
     {
         var modifiers = _modifierConverter.ToNode(parameter.Modifiers);
 
-        return SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Identifier))
+        return SyntaxFactory.Parameter(SyntaxFactory.Identifier(parameter.Name))
             .WithModifiers(modifiers)
             .WithType(SyntaxFactory.ParseTypeName(parameter.TypeName));
     }

@@ -33,7 +33,7 @@ internal class ConstructorConverter
         var parameters = _parameterConverter.ToNode(constructor.Parameters);
         var statements = _statementConverter.ToNode(constructor.Statements);
 
-        return SyntaxFactory.ConstructorDeclaration(constructor.Identifier)
+        return SyntaxFactory.ConstructorDeclaration(constructor.ClassName)
             .AddModifiers(modifiers.ToArray())
             .AddParameterListParameters(parameters.ToArray())
             .AddBodyStatements(statements.ToArray());

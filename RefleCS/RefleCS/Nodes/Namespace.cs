@@ -2,12 +2,20 @@
 
 public class Namespace
 {
+    private readonly List<Class> _classes;
+
     public Namespace(string name, IEnumerable<Class> classes)
     {
         Name = name;
-        Classes = classes;
+        _classes = classes.ToList();
     }
 
     public string Name { get; }
-    public IEnumerable<Class> Classes { get; }
+
+    public IReadOnlyCollection<Class> Classes => _classes;
+
+    public void AddClass(Class cls)
+    {
+        _classes.Add(cls);
+    }
 }

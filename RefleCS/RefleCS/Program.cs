@@ -3,6 +3,7 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using RefleCS.Converters;
+using RefleCS.Nodes;
 
 Console.WriteLine("Hello, World!");
 
@@ -38,6 +39,18 @@ var csFileConverter = new CsFileConverter();
 var tree = CSharpSyntaxTree.ParseText(content);
 var file = csFileConverter.ToCsFile(tree);
 
+var method = Method.NewPublic(
+    "int",
+    "MyCoolMethod",
+    new List<Parameter>(),
+    new List<Statement>
+    {
+        new("Console.WriteLine(\"Hello World\");"),
+        new("return 42;")
+    });
+
+file.Nmsp.Classes.First().AddMethod(method);
+
 var text = csFileConverter.ToNode(file).SyntaxTree.GetRoot().NormalizeWhitespace().GetText();
 
 File.WriteAllText(@"H:\Programming\Repositories\RefleCS\RefleCS\mycsfile.cs", text.ToString());
@@ -46,7 +59,6 @@ Console.WriteLine("");
 
 /*
  * TODO
- * - add method
  * - change to class lib
  * - handle warnings
  */

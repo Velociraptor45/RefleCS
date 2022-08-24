@@ -1,11 +1,3 @@
 ﻿namespace RefleCS.Nodes;
 
-public class Using
-{
-    public Using(string value)
-    {
-        Value = value;
-    }
-
-    public string Value { get; }
-}
+public record Using(string Value);
