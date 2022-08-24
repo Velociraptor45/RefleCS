@@ -1,5 +1,4 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
+﻿using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RefleCS.Nodes;
 
@@ -10,8 +9,15 @@ internal class CsFileConverter
     private readonly NamespaceConverter _namespaceConverter = new();
     private readonly UsingConverter _usingConverter = new();
 
-    public CsFile ToCsFile(SyntaxTree tree)
+    public CsFile ToCsFileFromPath(string filePath)
     {
+        var content = File.ReadAllText(filePath);
+        return ToCsFileFromContent(content);
+    }
+
+    public CsFile ToCsFileFromContent(string fileContent)
+    {
+        var tree = CSharpSyntaxTree.ParseText(fileContent);
         var root = tree.GetRoot();
 
         var usingDeclarations = root.DescendantNodes().OfType<UsingDirectiveSyntax>();

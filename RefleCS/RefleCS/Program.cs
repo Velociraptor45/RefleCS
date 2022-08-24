@@ -1,7 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using RefleCS.Converters;
 using RefleCS.Nodes;
 
@@ -35,9 +34,7 @@ public sealed class App
 }";
 
 var csFileConverter = new CsFileConverter();
-
-var tree = CSharpSyntaxTree.ParseText(content);
-var file = csFileConverter.ToCsFile(tree);
+var file = csFileConverter.ToCsFileFromContent(content);
 
 var method = Method.NewPublic(
     "int",

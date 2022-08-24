@@ -4,7 +4,7 @@ using RefleCS.Nodes;
 
 namespace RefleCS.Converters;
 
-public class UsingConverter
+internal class UsingConverter
 {
     public Using ToUsing(UsingDirectiveSyntax usng)
     {
