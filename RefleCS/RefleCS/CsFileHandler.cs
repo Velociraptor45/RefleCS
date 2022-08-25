@@ -8,12 +8,12 @@ public class CsFileHandler : ICsFileHandler
 {
     private static readonly CsFileConverter _converter = new();
 
-    public CsFile FromPath(string filePath)
+    public CsFile FromFile(string filePath)
     {
         return _converter.ToCsFileFromPath(filePath);
     }
 
-    public CsFile FromContent(string content)
+    public CsFile FromCode(string content)
     {
         return _converter.ToCsFileFromContent(content);
     }

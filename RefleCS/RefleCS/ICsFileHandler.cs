@@ -4,9 +4,9 @@ namespace RefleCS;
 
 public interface ICsFileHandler
 {
-    CsFile FromPath(string filePath);
+    CsFile FromFile(string filePath);
 
-    CsFile FromContent(string content);
+    CsFile FromCode(string content);
 
     void SaveOrReplace(CsFile csFile, string filePath);
 }

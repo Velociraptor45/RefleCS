@@ -7,7 +7,7 @@ namespace RefleCS.Tests;
 public class CsFileCreatorTests
 {
     [Fact]
-    public void FromContent_WithCtor_ShouldReturnExpectedResult()
+    public void FromCode_WithCtor_ShouldReturnExpectedResult()
     {
         // Arrange
         var content = @"using System;
@@ -66,7 +66,7 @@ public sealed class App
                 }));
 
         // Act
-        var result = new CsFileHandler().FromContent(content);
+        var result = new CsFileHandler().FromCode(content);
 
         // Assert
         result.Should().BeEquivalentTo(expectedResult);
@@ -84,7 +84,7 @@ public sealed class App
     [InlineData("protected async", new[] { MethodModifier.Protected, MethodModifier.Async })]
     [InlineData("internal async", new[] { MethodModifier.Internal, MethodModifier.Async })]
     [InlineData("private protected async", new[] { MethodModifier.Private, MethodModifier.Protected, MethodModifier.Async })]
-    public void FromContent_WithMethod_ShouldReturnExpectedResult(string modifiers, MethodModifier[] expectedModifiers)
+    public void FromCode_WithMethod_ShouldReturnExpectedResult(string modifiers, MethodModifier[] expectedModifiers)
     {
         // Arrange
         var content = @$"using System;
@@ -147,7 +147,7 @@ public sealed class App
                 }));
 
         // Act
-        var result = new CsFileHandler().FromContent(content);
+        var result = new CsFileHandler().FromCode(content);
 
         // Assert
         result.Should().BeEquivalentTo(expectedResult);
@@ -160,7 +160,7 @@ public sealed class App
     [InlineData("ref", new[] { ParameterModifier.Ref })]
     [InlineData("ref out", new[] { ParameterModifier.Ref, ParameterModifier.Out })]
     [InlineData("ref in", new[] { ParameterModifier.Ref, ParameterModifier.In })]
-    public void FromContent_WithMethodParameter_ShouldReturnExpectedResult(string modifiers,
+    public void FromCode_WithMethodParameter_ShouldReturnExpectedResult(string modifiers,
         ParameterModifier[] expectedModifiers)
     {
         // Arrange
@@ -217,14 +217,14 @@ public sealed class App
                 }));
 
         // Act
-        var result = new CsFileHandler().FromContent(content);
+        var result = new CsFileHandler().FromCode(content);
 
         // Assert
         result.Should().BeEquivalentTo(expectedResult);
     }
 
     [Fact]
-    public void FromContent_WithSuperclass_ShouldReturnExpectedResult()
+    public void FromCode_WithSuperclass_ShouldReturnExpectedResult()
     {
         // Arrange
         var content = @$"using System;
@@ -262,7 +262,7 @@ public sealed class App : AnotherApp<int>, IImplement
                 }));
 
         // Act
-        var result = new CsFileHandler().FromContent(content);
+        var result = new CsFileHandler().FromCode(content);
 
         // Assert
         result.Should().BeEquivalentTo(expectedResult);
