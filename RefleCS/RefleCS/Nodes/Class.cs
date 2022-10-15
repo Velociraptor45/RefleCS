@@ -60,6 +60,11 @@ public class Class
         _baseTypes.Remove(baseType);
     }
 
+    public void RemoveAllBaseTypes()
+    {
+        _baseTypes.Clear();
+    }
+
     public void AddMethod(Method method)
     {
         _methods.Add(method);

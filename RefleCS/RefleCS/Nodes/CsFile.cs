@@ -16,6 +16,9 @@ public class CsFile
 
     public void AddUsing(Using usng)
     {
+        if (_usings.Contains(usng))
+            return;
+
         _usings.Add(usng);
     }
 
