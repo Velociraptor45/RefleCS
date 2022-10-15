@@ -55,14 +55,34 @@ public class Class
         _baseTypes.Add(baseType);
     }
 
+    public void RemoveBaseType(BaseType baseType)
+    {
+        _baseTypes.Remove(baseType);
+    }
+
+    public void RemoveAllBaseTypes()
+    {
+        _baseTypes.Clear();
+    }
+
     public void AddMethod(Method method)
     {
         _methods.Add(method);
     }
 
+    public void RemoveMethod(Method method)
+    {
+        _methods.Remove(method);
+    }
+
     public void AddProperty(Property property)
     {
         _properties.Add(property);
+    }
+
+    public void RemoveProperty(Property property)
+    {
+        _properties.Remove(property);
     }
 
     public void AddConstructor(Constructor constructor)
