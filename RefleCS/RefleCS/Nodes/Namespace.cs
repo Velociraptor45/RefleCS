@@ -4,6 +4,10 @@ public class Namespace
 {
     private readonly List<Class> _classes;
 
+    public Namespace(string name) : this(name, Enumerable.Empty<Class>())
+    {
+    }
+
     public Namespace(string name, IEnumerable<Class> classes)
     {
         Name = name;
@@ -17,5 +21,10 @@ public class Namespace
     public void AddClass(Class cls)
     {
         _classes.Add(cls);
+    }
+
+    public void RemoveClass(Class cls)
+    {
+        _classes.Remove(cls);
     }
 }
