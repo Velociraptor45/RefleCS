@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RefleCS.TestTools\RefleCS.TestTools.csproj" />
     <ProjectReference Include="..\RefleCS\RefleCS.csproj" />
   </ItemGroup>
 
