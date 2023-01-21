@@ -589,7 +589,6 @@ public class ClassTests
             _fixture.SetupInitialDuplicatedModifiers();
             var sut = _fixture.CreateSut();
             _fixture.SetupModifierToRemove(sut);
-            var parameterCount = sut.Modifiers.Count;
 
             TestPropertyNotSetException.ThrowIfNull(_fixture.Modifier);
 
