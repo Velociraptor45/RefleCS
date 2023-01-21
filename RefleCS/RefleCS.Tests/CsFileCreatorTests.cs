@@ -1,6 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.CodeAnalysis;
-using RefleCS.Converters;
 using RefleCS.Enums;
 using RefleCS.Nodes;
 using Record = RefleCS.Nodes.Record;
@@ -358,13 +356,6 @@ public record App(int Id)
 
         // Act
         var result = _sut.FromCode(content);
-
-        var text = new CsFileConverter().ToNode(result)
-            .SyntaxTree
-            .GetRoot()
-            .NormalizeWhitespace()
-            .GetText()
-            .ToString();
 
         // Assert
         result.Should().BeEquivalentTo(expectedResult);
