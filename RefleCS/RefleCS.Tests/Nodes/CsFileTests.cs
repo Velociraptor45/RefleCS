@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using RefleCS.Nodes;
 using RefleCS.TestTools.Exceptions;
+using Record = RefleCS.Nodes.Record;
 
 namespace RefleCS.Tests.Nodes;
 
@@ -161,7 +162,7 @@ public class CsFileTests
 
         public void SetupNamespaceEmpty()
         {
-            _namespace = new Namespace("MyNamespace", new List<Class>());
+            _namespace = new Namespace("MyNamespace", new List<Class>(), Enumerable.Empty<Record>());
         }
     }
 }

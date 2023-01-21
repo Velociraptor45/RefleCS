@@ -2,6 +2,7 @@
 using ReflecCS.TestKit;
 using RefleCS.Nodes;
 using RefleCS.TestTools.Exceptions;
+using Record = RefleCS.Nodes.Record;
 
 namespace RefleCS.Tests.Nodes;
 
@@ -87,7 +88,7 @@ public class NamespaceTests
 
         public Namespace CreateSut()
         {
-            return new Namespace(Name, Classes);
+            return new Namespace(Name, Classes, Enumerable.Empty<Record>());
         }
     }
 }
