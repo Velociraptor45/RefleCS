@@ -8,115 +8,8 @@ using RefleCS.TestTools.Exceptions;
 
 namespace RefleCS.Tests.Nodes;
 
-public class RecordTests
+public class ClassTests
 {
-    public class AddParameter
-    {
-        private readonly AddParameterFixture _fixture;
-
-        public AddParameter()
-        {
-            _fixture = new AddParameterFixture();
-        }
-
-        [Fact]
-        public void AddParameter_ShouldAddParameter()
-        {
-            // Arrange
-            var sut = _fixture.CreateSut();
-            _fixture.SetupParameter();
-            var parameterCount = sut.Parameters.Count;
-
-            TestPropertyNotSetException.ThrowIfNull(_fixture.Parameter);
-
-            // Act
-            sut.AddParameter(_fixture.Parameter);
-
-            // Assert
-            sut.Parameters.Should().Contain(_fixture.Parameter);
-            sut.Parameters.Should().HaveCount(parameterCount + 1);
-        }
-
-        private class AddParameterFixture
-        {
-            private readonly RecordBuilder _builder;
-
-            public AddParameterFixture()
-            {
-                _builder = new RecordBuilder();
-            }
-
-            public Parameter? Parameter { get; private set; }
-
-            public void SetupParameter()
-            {
-                Parameter = new ParameterBuilder().Create();
-            }
-
-            public Record CreateSut()
-            {
-                return _builder.Create();
-            }
-        }
-    }
-
-    public class RemoveParameter
-    {
-        private readonly RemoveParameterFixture _fixture;
-
-        public RemoveParameter()
-        {
-            _fixture = new RemoveParameterFixture();
-        }
-
-        [Fact]
-        public void RemoveParameter_ShouldRemoveParameter()
-        {
-            // Arrange
-            _fixture.SetupInitialParameters();
-            var sut = _fixture.CreateSut();
-            _fixture.SetupParameterToRemove(sut);
-            var parameterCount = sut.Parameters.Count;
-
-            TestPropertyNotSetException.ThrowIfNull(_fixture.Parameter);
-
-            // Act
-            sut.RemoveParameter(_fixture.Parameter);
-
-            // Assert
-            sut.Parameters.Should().HaveCount(parameterCount - 1);
-            sut.Parameters.Should().NotContain(_fixture.Parameter);
-        }
-
-        private class RemoveParameterFixture
-        {
-            private readonly RecordBuilder _builder;
-
-            public RemoveParameterFixture()
-            {
-                _builder = new RecordBuilder();
-            }
-
-            public Parameter? Parameter { get; private set; }
-
-            public void SetupInitialParameters()
-            {
-                _builder
-                    .WithParameters(new ParameterBuilder().CreateMany(3));
-            }
-
-            public void SetupParameterToRemove(Record recrd)
-            {
-                Parameter = recrd.Parameters.ElementAt(1);
-            }
-
-            public Record CreateSut()
-            {
-                return _builder.Create();
-            }
-        }
-    }
-
     public class AddProperty
     {
         private readonly AddPropertyFixture _fixture;
@@ -146,11 +39,11 @@ public class RecordTests
 
         private class AddPropertyFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public AddPropertyFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public Property? Property { get; private set; }
@@ -160,7 +53,7 @@ public class RecordTests
                 Property = new PropertyBuilder().Create();
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -197,11 +90,11 @@ public class RecordTests
 
         private class RemovePropertyFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public RemovePropertyFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public Property? Property { get; private set; }
@@ -212,12 +105,12 @@ public class RecordTests
                     .WithProperties(new PropertyBuilder().CreateMany(3));
             }
 
-            public void SetupPropertyToRemove(Record recrd)
+            public void SetupPropertyToRemove(Class cls)
             {
-                Property = recrd.Properties.ElementAt(1);
+                Property = cls.Properties.ElementAt(1);
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -253,11 +146,11 @@ public class RecordTests
 
         private class AddBaseTypeFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public AddBaseTypeFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public BaseType? BaseType { get; private set; }
@@ -267,7 +160,7 @@ public class RecordTests
                 BaseType = new BaseTypeBuilder().Create();
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -304,11 +197,11 @@ public class RecordTests
 
         private class RemoveBaseTypeFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public RemoveBaseTypeFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public BaseType? BaseType { get; private set; }
@@ -319,12 +212,12 @@ public class RecordTests
                     .WithBaseTypes(new BaseTypeBuilder().CreateMany(3));
             }
 
-            public void SetupBaseTypeToRemove(Record recrd)
+            public void SetupBaseTypeToRemove(Class cls)
             {
-                BaseType = recrd.BaseTypes.ElementAt(1);
+                BaseType = cls.BaseTypes.ElementAt(1);
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -356,11 +249,11 @@ public class RecordTests
 
         private class RemoveAllBaseTypesFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public RemoveAllBaseTypesFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public void SetupInitialBaseTypes()
@@ -369,7 +262,7 @@ public class RecordTests
                     .WithBaseTypes(new BaseTypeBuilder().CreateMany(3));
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -405,11 +298,11 @@ public class RecordTests
 
         private class AddMethodFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public AddMethodFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public Method? Method { get; private set; }
@@ -419,7 +312,7 @@ public class RecordTests
                 Method = new MethodBuilder().Create();
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -456,11 +349,11 @@ public class RecordTests
 
         private class RemoveMethodFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public RemoveMethodFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public Method? Method { get; private set; }
@@ -471,12 +364,12 @@ public class RecordTests
                     .WithMethods(new MethodBuilder().CreateMany(3));
             }
 
-            public void SetupMethodToRemove(Record recrd)
+            public void SetupMethodToRemove(Class cls)
             {
-                Method = recrd.Methods.ElementAt(1);
+                Method = cls.Methods.ElementAt(1);
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -512,11 +405,11 @@ public class RecordTests
 
         private class AddConstructorFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public AddConstructorFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public Constructor? Constructor { get; private set; }
@@ -526,7 +419,7 @@ public class RecordTests
                 Constructor = new ConstructorBuilder().Create();
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -563,11 +456,11 @@ public class RecordTests
 
         private class RemoveConstructorFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public RemoveConstructorFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public Constructor? Constructor { get; private set; }
@@ -578,12 +471,12 @@ public class RecordTests
                     .WithConstructors(new ConstructorBuilder().CreateMany(3));
             }
 
-            public void SetupConstructorToRemove(Record recrd)
+            public void SetupConstructorToRemove(Class cls)
             {
-                Constructor = recrd.Constructors.ElementAt(1);
+                Constructor = cls.Constructors.ElementAt(1);
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -639,11 +532,11 @@ public class RecordTests
 
         private class AddModifierFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public AddModifierFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public ClassModifier? Modifier { get; private set; }
@@ -673,7 +566,7 @@ public class RecordTests
                 _builder.WithModifiers(new List<ClassModifier> { Modifier.Value });
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }
@@ -709,11 +602,11 @@ public class RecordTests
 
         private class RemoveModifierFixture
         {
-            private readonly RecordBuilder _builder;
+            private readonly ClassBuilder _builder;
 
             public RemoveModifierFixture()
             {
-                _builder = new RecordBuilder();
+                _builder = new ClassBuilder();
             }
 
             public ClassModifier? Modifier { get; private set; }
@@ -725,12 +618,12 @@ public class RecordTests
                 _builder.WithModifiers(new List<ClassModifier> { modifier, modifier });
             }
 
-            public void SetupModifierToRemove(Record recrd)
+            public void SetupModifierToRemove(Class cls)
             {
-                Modifier = recrd.Modifiers.ElementAt(1);
+                Modifier = cls.Modifiers.ElementAt(1);
             }
 
-            public Record CreateSut()
+            public Class CreateSut()
             {
                 return _builder.Create();
             }

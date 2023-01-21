@@ -1,10 +1,18 @@
+using AutoFixture.Kernel;
+using ReflecCS.TestKit;
+using ReflecCS.TestKit.Common.Selectors;
 using RefleCS.Enums;
 using RefleCS.Nodes;
-using ReflecCS.TestKit;
 
 namespace RefleCS.TestKit.Nodes;
+
 public class ClassBuilder : TestBuilderBase<Class>
 {
+    public ClassBuilder()
+    {
+        Customize<Class>(c => c.FromFactory(new MethodInvoker(new RecordComplexCtorQuery())));
+    }
+
     public ClassBuilder WithName(string name)
     {
         FillConstructorWith(nameof(name), name);

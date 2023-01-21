@@ -90,8 +90,21 @@ public class Class
         _constructors.Add(constructor);
     }
 
+    public void RemoveConstructor(Constructor constructor)
+    {
+        _constructors.Remove(constructor);
+    }
+
     public void AddModifier(ClassModifier modifier)
     {
+        if (_modifiers.Contains(modifier))
+            return;
+
         _modifiers.Add(modifier);
+    }
+
+    public void RemoveModifier(ClassModifier modifier)
+    {
+        _modifiers.RemoveAll(m => m == modifier);
     }
 }
