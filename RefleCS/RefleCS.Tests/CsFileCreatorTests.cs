@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using RefleCS.Enums;
 using RefleCS.Nodes;
-using Record = RefleCS.Nodes.Record;
 
 namespace RefleCS.Tests;
 

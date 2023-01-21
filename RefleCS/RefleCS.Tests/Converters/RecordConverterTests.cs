@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using RefleCS.Converters;
-using Record = RefleCS.Nodes.Record;
 
 namespace RefleCS.Tests.Converters;
 

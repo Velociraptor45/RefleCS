@@ -1,7 +1,6 @@
 ﻿using RefleCS.Enums;
 using RefleCS.Nodes;
 using System.Collections;
-using Record = RefleCS.Nodes.Record;
 
 namespace RefleCS.Tests.Converters;
 

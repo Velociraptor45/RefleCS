@@ -2,7 +2,6 @@
 using ReflecCS.TestKit;
 using RefleCS.Nodes;
 using RefleCS.TestTools.Exceptions;
-using Record = RefleCS.Nodes.Record;
 
 namespace RefleCS.Tests.Nodes;
 
