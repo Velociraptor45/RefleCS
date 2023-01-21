@@ -6,6 +6,13 @@ namespace RefleCS.Tests;
 
 public class CsFileCreatorTests
 {
+    private readonly CsFileHandler _sut;
+
+    public CsFileCreatorTests()
+    {
+        _sut = new CsFileHandler();
+    }
+
     [Fact]
     public void FromCode_WithCtor_ShouldReturnExpectedResult()
     {
@@ -55,6 +62,7 @@ public sealed class App
                                         "int?",
                                         "id")
                                 },
+                                null,
                                 new List<Statement>
                                 {
                                     new("Id = id.Value;")
@@ -63,7 +71,8 @@ public sealed class App
                         new List<Property>(),
                         new List<Method>(),
                         new List<BaseType>())
-                }));
+                },
+                Enumerable.Empty<Record>()));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -144,7 +153,8 @@ public sealed class App
                                 })
                         },
                         new List<BaseType>())
-                }));
+                },
+                Enumerable.Empty<Record>()));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -214,7 +224,8 @@ public sealed class App
                                 })
                         },
                         new List<BaseType>())
-                }));
+                },
+                Enumerable.Empty<Record>()));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -259,10 +270,91 @@ public sealed class App : AnotherApp<int>, IImplement
                             new("AnotherApp<int>"),
                             new("IImplement")
                         })
-                }));
+                },
+                Enumerable.Empty<Record>()));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void FromCode_WithRecord_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = @$"using System;
+
+namespace MyApp;
+
+public record App(int Id)
+{{
+    public App(int id, string name) : this(id)
+    {{
+    }}
+
+    public string Name {{ get; }}
+}}";
+
+        var expectedResult = new CsFile(
+            new List<Using>
+            {
+                new("System")
+            },
+            new Namespace(
+                "MyApp",
+                Enumerable.Empty<Class>(),
+                new List<Record>
+                {
+                    new(
+                        new List<ClassModifier>
+                        {
+                            ClassModifier.Public
+                        },
+                        "App",
+                        new List<Parameter>
+                        {
+                            new("int", "Id")
+                        },
+                        new List<Constructor>()
+                        {
+                            new(
+                                new List<ConstructorModifier>() { ConstructorModifier.Public },
+                                "App",
+                                new List<Parameter>
+                                {
+                                    new("int", "id"),
+                                    new("string", "name")
+                                },
+                                new ConstructorInitializer(
+                                    ConstructorInitializerType.This,
+                                    new List<Argument>
+                                    {
+                                        new("id")
+                                    }),
+                                new List<Statement>())
+                        },
+                        new List<Property>
+                        {
+                            new Property(
+                                new List<PropertyModifier>
+                                {
+                                    PropertyModifier.Public
+                                },
+                                "string",
+                                "Name",
+                                new List<Accessor>
+                                {
+                                    Accessor.Get
+                                })
+                        },
+                        new List<Method>(),
+                        new List<BaseType>())
+                }));
+
+        // Act
+        var result = _sut.FromCode(content);
 
         // Assert
         result.Should().BeEquivalentTo(expectedResult);

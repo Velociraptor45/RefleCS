@@ -161,7 +161,7 @@ public class CsFileTests
 
         public void SetupNamespaceEmpty()
         {
-            _namespace = new Namespace("MyNamespace", new List<Class>());
+            _namespace = new Namespace("MyNamespace", new List<Class>(), Enumerable.Empty<Record>());
         }
     }
 }

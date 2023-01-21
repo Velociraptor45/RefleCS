@@ -8,7 +8,7 @@
     <Authors>Velociraptor45</Authors>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Version>0.2.0-alpha.3</Version>
     <AssemblyVersion>0.1.0</AssemblyVersion>
     <Copyright></Copyright>

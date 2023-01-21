@@ -87,7 +87,7 @@ public class NamespaceTests
 
         public Namespace CreateSut()
         {
-            return new Namespace(Name, Classes);
+            return new Namespace(Name, Classes, Enumerable.Empty<Record>());
         }
     }
 }

@@ -9,6 +9,7 @@ internal class ConstructorConverter
     private readonly ParameterConverter _parameterConverter = new();
     private readonly ModifierConverter _modifierConverter = new();
     private readonly StatementConverter _statementConverter = new();
+    private readonly ConstructorInitializerConverter _constructorInitializerConverter = new();
 
     public Constructor ToConstructor(ConstructorDeclarationSyntax ctorDeclaration)
     {
@@ -18,7 +19,13 @@ internal class ConstructorConverter
         var parameters = _parameterConverter.ToParameter(ctorDeclaration.ParameterList.Parameters);
         var modifiers = _modifierConverter.ToConstructorModifier(ctorDeclaration.Modifiers);
 
-        return new Constructor(modifiers, ctorDeclaration.Identifier.ValueText, parameters, statements);
+        ConstructorInitializer? initializer = null;
+        if (ctorDeclaration.Initializer is not null)
+        {
+            initializer = _constructorInitializerConverter.ToConstructorInitializer(ctorDeclaration.Initializer);
+        }
+
+        return new Constructor(modifiers, ctorDeclaration.Identifier.ValueText, parameters, initializer, statements);
     }
 
     public IEnumerable<Constructor> ToConstructor(IEnumerable<ConstructorDeclarationSyntax> ctorDeclarations)
@@ -35,10 +42,18 @@ internal class ConstructorConverter
         var parameters = _parameterConverter.ToNode(constructor.Parameters);
         var statements = _statementConverter.ToNode(constructor.Statements);
 
-        return SyntaxFactory.ConstructorDeclaration(constructor.ClassName)
+        var ctor = SyntaxFactory.ConstructorDeclaration(constructor.ClassName)
             .AddModifiers(modifiers.ToArray())
             .AddParameterListParameters(parameters.ToArray())
             .AddBodyStatements(statements.ToArray());
+
+        if (constructor.Initializer is not null)
+        {
+            var initializer = _constructorInitializerConverter.ToNode(constructor.Initializer);
+            ctor = ctor.WithInitializer(initializer);
+        }
+
+        return ctor;
     }
 
     public IEnumerable<ConstructorDeclarationSyntax> ToNode(IEnumerable<Constructor> constructors)
