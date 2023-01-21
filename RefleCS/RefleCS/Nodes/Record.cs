@@ -47,4 +47,66 @@ public class Record
 
     public IReadOnlyCollection<BaseType> BaseTypes => _baseTypes;
     public IReadOnlyCollection<Parameter> Parameters => _parameters;
+
+    public static Record Public(string name)
+    {
+        var cls = new Record(name);
+        cls._modifiers.Add(ClassModifier.Public);
+        return cls;
+    }
+
+    public void AddBaseType(BaseType baseType)
+    {
+        _baseTypes.Add(baseType);
+    }
+
+    public void RemoveBaseType(BaseType baseType)
+    {
+        _baseTypes.Remove(baseType);
+    }
+
+    public void RemoveAllBaseTypes()
+    {
+        _baseTypes.Clear();
+    }
+
+    public void AddMethod(Method method)
+    {
+        _methods.Add(method);
+    }
+
+    public void RemoveMethod(Method method)
+    {
+        _methods.Remove(method);
+    }
+
+    public void AddProperty(Property property)
+    {
+        _properties.Add(property);
+    }
+
+    public void RemoveProperty(Property property)
+    {
+        _properties.Remove(property);
+    }
+
+    public void AddConstructor(Constructor constructor)
+    {
+        _constructors.Add(constructor);
+    }
+
+    public void AddModifier(ClassModifier modifier)
+    {
+        _modifiers.Add(modifier);
+    }
+
+    public void AddParameter(Parameter parameter)
+    {
+        _parameters.Add(parameter);
+    }
+
+    public void RemoveParameter(Parameter parameter)
+    {
+        _parameters.Remove(parameter);
+    }
 }
