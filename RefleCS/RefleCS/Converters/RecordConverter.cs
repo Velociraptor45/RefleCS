@@ -69,7 +69,7 @@ internal class RecordConverter
             .AddMembers(methods.ToArray());
 
         if (baseTypes.Any())
-            node.AddBaseListTypes(baseTypes.ToArray());
+            node = node.AddBaseListTypes(baseTypes.ToArray());
 
         return node;
     }

@@ -19,6 +19,7 @@ public class Record
         _properties = new List<Property>();
         _baseTypes = new List<BaseType>();
         _modifiers = new List<ClassModifier>();
+        _parameters = new List<Parameter>();
     }
 
     public Record(IEnumerable<ClassModifier> modifiers, string name, IEnumerable<Parameter> parameters,

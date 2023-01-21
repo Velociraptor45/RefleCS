@@ -7,6 +7,19 @@ namespace RefleCS.Converters;
 
 internal class ModifierConverter
 {
+    public ConstructorInitializerType ToConstructorInitializerType(SyntaxToken modifier)
+    {
+        return ToModifier<ConstructorInitializerType>(modifier);
+    }
+
+    public IEnumerable<ConstructorInitializerType> ToConstructorInitializerType(IEnumerable<SyntaxToken> modifiers)
+    {
+        foreach (var modifier in modifiers)
+        {
+            yield return ToConstructorInitializerType(modifier);
+        }
+    }
+
     public ClassModifier ToClassModifier(SyntaxToken modifier)
     {
         return ToModifier<ClassModifier>(modifier);
@@ -80,6 +93,11 @@ internal class ModifierConverter
         return (T)result!;
     }
 
+    public SyntaxToken ToNode(ConstructorInitializerType modifier)
+    {
+        return ToNode<ConstructorInitializerType>(modifier);
+    }
+
     public SyntaxTokenList ToNode(IEnumerable<ClassModifier> modifiers)
     {
         return ToNode<ClassModifier>(modifiers);
@@ -107,7 +125,11 @@ internal class ModifierConverter
 
     private SyntaxTokenList ToNode<T>(IEnumerable<T> modifiers) where T : Enum
     {
-        return SyntaxFactory.TokenList()
-            .AddRange(modifiers.Select(m => SyntaxFactory.Token(m.GetSyntaxKind())));
+        return SyntaxFactory.TokenList().AddRange(modifiers.Select(ToNode));
+    }
+
+    private SyntaxToken ToNode<T>(T modifier) where T : Enum
+    {
+        return SyntaxFactory.Token(modifier.GetSyntaxKind());
     }
 }

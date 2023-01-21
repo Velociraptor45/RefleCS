@@ -65,6 +65,7 @@ public sealed class App
                                         "int?",
                                         "id")
                                 },
+                                null,
                                 new List<Statement>
                                 {
                                     new("Id = id.Value;")
@@ -329,9 +330,28 @@ public record App(int Id)
                                     new("int", "id"),
                                     new("string", "name")
                                 },
+                                new ConstructorInitializer(
+                                    ConstructorInitializerType.This,
+                                    new List<Argument>
+                                    {
+                                        new("id")
+                                    }),
                                 new List<Statement>())
                         },
-                        new List<Property>(),
+                        new List<Property>
+                        {
+                            new Property(
+                                new List<PropertyModifier>
+                                {
+                                    PropertyModifier.Public
+                                },
+                                "string",
+                                "Name",
+                                new List<Accessor>
+                                {
+                                    Accessor.Get
+                                })
+                        },
                         new List<Method>(),
                         new List<BaseType>())
                 }));
