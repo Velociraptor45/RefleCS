@@ -40,7 +40,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           dotnet-sonarscanner begin /k:"Velociraptor45_RefleCS" /o:"velociraptor45" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions=**/*TestTools*/** /d:sonar.cs.opencover.reportsPaths=RefleCS/TestResults/coverage.opencover.xml
-      - name: Build Backend
+      - name: Build
         run: |
           dotnet build RefleCS/RefleCS.sln
       - name: Test
