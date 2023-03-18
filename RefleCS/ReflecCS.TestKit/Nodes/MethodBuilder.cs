@@ -8,10 +8,11 @@ namespace RefleCS.TestKit.Nodes;
 
 public class MethodBuilder : TestBuilderBase<Method>
 {
+    // tcg keep
     public MethodBuilder()
     {
         Customize<Method>(c =>
-            c.FromFactory(new MethodInvoker(new CtorSelectionQuery(typeof(IEnumerable<MethodModifier>)))));
+                c.FromFactory(new MethodInvoker(new CtorSelectionQuery(typeof(IEnumerable<MethodModifier>)))));
     }
 
     public MethodBuilder WithReturnTypeName(string returnTypeName)
