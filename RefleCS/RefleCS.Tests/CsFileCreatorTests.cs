@@ -189,7 +189,7 @@ public sealed class App
                                 new List<Comment>
                                 {
                                     new("// another comment ???"),
-                                    new("/*\r\n     * my other comment\r\n     */")
+                                    new($"/*{Environment.NewLine}     * my other comment{Environment.NewLine}     */")
                                 },
                                 expectedModifiers,
                                 "void",
