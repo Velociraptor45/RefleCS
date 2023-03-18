@@ -80,54 +80,75 @@ public class Method
             statements);
     }
 
-    public void ChangeName(string name)
+    public Method ChangeName(string name)
     {
         ValidateName(name);
         Name = name;
+        return this;
     }
 
-    public void ChangeReturnTypeName(string returnTypeName)
+    public Method ChangeReturnTypeName(string returnTypeName)
     {
         ValidateReturnTypeName(returnTypeName);
         ReturnTypeName = returnTypeName;
+        return this;
     }
 
-    public void AddLeadingComment(Comment comment)
+    public Method AddLeadingComment(Comment comment)
     {
         _leadingComments.Add(comment);
+        return this;
     }
 
-    public void AddModifier(MethodModifier modifier)
+    public Method AddModifier(MethodModifier modifier)
     {
         if (_modifiers.Contains(modifier))
-            return;
+            return this;
 
         _modifiers.Add(modifier);
+        return this;
     }
 
-    public void RemoveModifier(MethodModifier modifier)
+    public Method RemoveModifier(MethodModifier modifier)
     {
         _modifiers.RemoveAll(m => m == modifier);
+        return this;
     }
 
-    public void AddParameter(Parameter parameter)
+    public Method AddParameters(IEnumerable<Parameter> parameters)
+    {
+        _parameters.AddRange(parameters);
+        return this;
+    }
+
+    public Method AddParameter(Parameter parameter)
     {
         _parameters.Add(parameter);
+        return this;
     }
 
-    public void RemoveParameter(Parameter parameter)
+    public Method RemoveParameter(Parameter parameter)
     {
         _parameters.Remove(parameter);
+        return this;
     }
 
-    public void AddStatement(Statement statement)
+    public Method AddStatements(IEnumerable<Statement> statements)
+    {
+        _statements.AddRange(statements);
+        return this;
+    }
+
+    public Method AddStatement(Statement statement)
     {
         _statements.Add(statement);
+        return this;
     }
 
-    public void RemoveStatement(Statement statement)
+    public Method RemoveStatement(Statement statement)
     {
         _statements.Remove(statement);
+        return this;
     }
 
     private void ValidateReturnTypeName(string returnTypeName)
