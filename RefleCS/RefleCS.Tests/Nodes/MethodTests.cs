@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using ReflecCS.TestKit;
 using ReflecCS.TestKit.Common.Customizations;
+using ReflecCS.TestKit.Nodes;
 using RefleCS.Enums;
 using RefleCS.Nodes;
 using RefleCS.TestKit.Nodes;
@@ -277,6 +278,220 @@ public class MethodTests
             public void SetupModifierToRemove(Method cls)
             {
                 Modifier = cls.Modifiers.ElementAt(1);
+            }
+
+            public Method CreateSut()
+            {
+                return _builder.Create();
+            }
+        }
+    }
+
+    public class AddParameter
+    {
+        private readonly AddParameterFixture _fixture;
+
+        public AddParameter()
+        {
+            _fixture = new AddParameterFixture();
+        }
+
+        [Fact]
+        public void AddParameter_ShouldAddParameter()
+        {
+            // Arrange
+            var sut = _fixture.CreateSut();
+            _fixture.SetupParameter();
+            var parameterCount = sut.Parameters.Count;
+
+            TestPropertyNotSetException.ThrowIfNull(_fixture.Parameter);
+
+            // Act
+            sut.AddParameter(_fixture.Parameter);
+
+            // Assert
+            sut.Parameters.Should().Contain(_fixture.Parameter);
+            sut.Parameters.Should().HaveCount(parameterCount + 1);
+        }
+
+        private class AddParameterFixture
+        {
+            private readonly MethodBuilder _builder;
+
+            public AddParameterFixture()
+            {
+                _builder = new MethodBuilder();
+            }
+
+            public Parameter? Parameter { get; private set; }
+
+            public void SetupParameter()
+            {
+                Parameter = new ParameterBuilder().Create();
+            }
+
+            public Method CreateSut()
+            {
+                return _builder.Create();
+            }
+        }
+    }
+
+    public class RemoveParameter
+    {
+        private readonly RemoveParameterFixture _fixture;
+
+        public RemoveParameter()
+        {
+            _fixture = new RemoveParameterFixture();
+        }
+
+        [Fact]
+        public void RemoveParameter_ShouldRemoveParameter()
+        {
+            // Arrange
+            _fixture.SetupInitialParameters();
+            var sut = _fixture.CreateSut();
+            _fixture.SetupParameterToRemove(sut);
+            var parameterCount = sut.Parameters.Count;
+
+            TestPropertyNotSetException.ThrowIfNull(_fixture.Parameter);
+
+            // Act
+            sut.RemoveParameter(_fixture.Parameter);
+
+            // Assert
+            sut.Parameters.Should().HaveCount(parameterCount - 1);
+            sut.Parameters.Should().NotContain(_fixture.Parameter);
+        }
+
+        private class RemoveParameterFixture
+        {
+            private readonly MethodBuilder _builder;
+
+            public RemoveParameterFixture()
+            {
+                _builder = new MethodBuilder();
+            }
+
+            public Parameter? Parameter { get; private set; }
+
+            public void SetupInitialParameters()
+            {
+                _builder
+                    .WithParameters(new ParameterBuilder().CreateMany(3));
+            }
+
+            public void SetupParameterToRemove(Method cls)
+            {
+                Parameter = cls.Parameters.ElementAt(1);
+            }
+
+            public Method CreateSut()
+            {
+                return _builder.Create();
+            }
+        }
+    }
+
+    public class AddStatement
+    {
+        private readonly AddStatementFixture _fixture;
+
+        public AddStatement()
+        {
+            _fixture = new AddStatementFixture();
+        }
+
+        [Fact]
+        public void AddStatement_ShouldAddStatement()
+        {
+            // Arrange
+            var sut = _fixture.CreateSut();
+            _fixture.SetupStatement();
+            var statementCount = sut.Statements.Count;
+
+            TestPropertyNotSetException.ThrowIfNull(_fixture.Statement);
+
+            // Act
+            sut.AddStatement(_fixture.Statement);
+
+            // Assert
+            sut.Statements.Should().Contain(_fixture.Statement);
+            sut.Statements.Should().HaveCount(statementCount + 1);
+        }
+
+        private class AddStatementFixture
+        {
+            private readonly MethodBuilder _builder;
+
+            public AddStatementFixture()
+            {
+                _builder = new MethodBuilder();
+            }
+
+            public Statement? Statement { get; private set; }
+
+            public void SetupStatement()
+            {
+                Statement = new StatementBuilder().Create();
+            }
+
+            public Method CreateSut()
+            {
+                return _builder.Create();
+            }
+        }
+    }
+
+    public class RemoveStatement
+    {
+        private readonly RemoveStatementFixture _fixture;
+
+        public RemoveStatement()
+        {
+            _fixture = new RemoveStatementFixture();
+        }
+
+        [Fact]
+        public void RemoveStatement_ShouldRemoveStatement()
+        {
+            // Arrange
+            _fixture.SetupInitialStatements();
+            var sut = _fixture.CreateSut();
+            _fixture.SetupStatementToRemove(sut);
+            var statementCount = sut.Statements.Count;
+
+            TestPropertyNotSetException.ThrowIfNull(_fixture.Statement);
+
+            // Act
+            sut.RemoveStatement(_fixture.Statement);
+
+            // Assert
+            sut.Statements.Should().HaveCount(statementCount - 1);
+            sut.Statements.Should().NotContain(_fixture.Statement);
+        }
+
+        private class RemoveStatementFixture
+        {
+            private readonly MethodBuilder _builder;
+
+            public RemoveStatementFixture()
+            {
+                _builder = new MethodBuilder();
+            }
+
+            public Statement? Statement { get; private set; }
+
+            public void SetupInitialStatements()
+            {
+                _builder
+                    .WithStatements(new StatementBuilder().CreateMany(3));
+            }
+
+            public void SetupStatementToRemove(Method cls)
+            {
+                Statement = cls.Statements.ElementAt(1);
             }
 
             public Method CreateSut()
