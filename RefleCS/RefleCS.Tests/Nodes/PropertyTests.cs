@@ -10,6 +10,48 @@ namespace RefleCS.Tests.Nodes;
 
 public class PropertyTests
 {
+    [Fact]
+    public void PublicGetOnly_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var typeName = new TestBuilder<string>().Create();
+        var name = new TestBuilder<string>().Create();
+        var expectedResult = new Property(
+            new List<PropertyModifier> { PropertyModifier.Public },
+            typeName,
+            name,
+            new List<PropertyAccessor> { PropertyAccessor.Public(Accessor.Get) });
+
+        // Act
+        var result = Property.PublicGetOnly(typeName, name);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void PublicGetPrivateSet_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var typeName = new TestBuilder<string>().Create();
+        var name = new TestBuilder<string>().Create();
+        var expectedResult = new Property(
+            new List<PropertyModifier> { PropertyModifier.Public },
+            typeName,
+            name,
+            new List<PropertyAccessor>
+            {
+                PropertyAccessor.Public(Accessor.Get),
+                new(Accessor.Set, new List<AccessorModifier> { AccessorModifier.Private })
+            });
+
+        // Act
+        var result = Property.PublicGetPrivateSet(typeName, name);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
     [Theory]
     [InlineData("")]
     [InlineData(" ")]
