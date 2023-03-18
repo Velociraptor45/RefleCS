@@ -117,7 +117,11 @@ public class Method
 
     public Method AddParameters(IEnumerable<Parameter> parameters)
     {
-        _parameters.AddRange(parameters);
+        foreach (var parameter in parameters)
+        {
+            AddParameter(parameter);
+        }
+
         return this;
     }
 
@@ -135,7 +139,11 @@ public class Method
 
     public Method AddStatements(IEnumerable<Statement> statements)
     {
-        _statements.AddRange(statements);
+        foreach (var statement in statements)
+        {
+            AddStatement(statement);
+        }
+
         return this;
     }
 
