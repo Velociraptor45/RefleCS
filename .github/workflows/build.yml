@@ -46,6 +46,9 @@ jobs:
       - name: Test
         run: |
           dotnet test ./RefleCS/RefleCS.sln --logger:trx --results-directory TestResults "/p:CollectCoverage=true" "/p:CoverletOutput=../TestResults/" "/p:MergeWith=../TestResults/coverage.json" "/p:CoverletOutputFormat=\"json,opencover\""
+      - name: List
+        run: |
+          ls -lR
       - name: End Sonar scan
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
