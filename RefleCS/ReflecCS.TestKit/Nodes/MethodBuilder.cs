@@ -1,10 +1,19 @@
+using AutoFixture.Kernel;
+using ReflecCS.TestKit;
+using ReflecCS.TestKit.Common.Selectors;
 using RefleCS.Enums;
 using RefleCS.Nodes;
-using ReflecCS.TestKit;
 
 namespace RefleCS.TestKit.Nodes;
+
 public class MethodBuilder : TestBuilderBase<Method>
 {
+    public MethodBuilder()
+    {
+        Customize<Method>(c =>
+            c.FromFactory(new MethodInvoker(new CtorSelectionQuery(typeof(IEnumerable<MethodModifier>)))));
+    }
+
     public MethodBuilder WithReturnTypeName(string returnTypeName)
     {
         FillConstructorWith(nameof(returnTypeName), returnTypeName);

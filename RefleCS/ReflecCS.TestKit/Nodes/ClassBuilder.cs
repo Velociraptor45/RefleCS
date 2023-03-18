@@ -10,7 +10,8 @@ public class ClassBuilder : TestBuilderBase<Class>
 {
     public ClassBuilder()
     {
-        Customize<Class>(c => c.FromFactory(new MethodInvoker(new RecordComplexCtorQuery())));
+        Customize<Class>(c =>
+            c.FromFactory(new MethodInvoker(new CtorSelectionQuery(typeof(IEnumerable<ClassModifier>)))));
     }
 
     public ClassBuilder WithName(string name)
