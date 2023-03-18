@@ -90,6 +90,7 @@ public sealed class App
     [InlineData("private protected", new[] { MethodModifier.Private, MethodModifier.Protected })]
     [InlineData("public async", new[] { MethodModifier.Public, MethodModifier.Async })]
     [InlineData("private async", new[] { MethodModifier.Private, MethodModifier.Async })]
+    [InlineData("private override async", new[] { MethodModifier.Private, MethodModifier.Override, MethodModifier.Async })]
     [InlineData("protected async", new[] { MethodModifier.Protected, MethodModifier.Async })]
     [InlineData("internal async", new[] { MethodModifier.Internal, MethodModifier.Async })]
     [InlineData("private protected async", new[] { MethodModifier.Private, MethodModifier.Protected, MethodModifier.Async })]

@@ -9,7 +9,7 @@
     <PackageProjectUrl></PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>0.2.0-alpha.3</Version>
+    <Version>0.2.0-alpha.4</Version>
     <AssemblyVersion>0.1.0</AssemblyVersion>
     <Copyright></Copyright>
     <RepositoryUrl>https://github.com/Velociraptor45/RefleCS</RepositoryUrl>

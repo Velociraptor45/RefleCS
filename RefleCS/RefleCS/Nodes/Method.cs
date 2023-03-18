@@ -11,6 +11,9 @@ public class Method
 
     public Method(string returnTypeName, string name)
     {
+        ValidateName(name);
+        ValidateReturnTypeName(returnTypeName);
+
         _modifiers = new List<MethodModifier>();
         _leadingComments = new List<Comment>();
         ReturnTypeName = returnTypeName;
@@ -22,6 +25,9 @@ public class Method
     public Method(IEnumerable<Comment> leadingComments, IEnumerable<MethodModifier> modifiers, string returnTypeName,
         string name, IEnumerable<Parameter> parameters, IEnumerable<Statement> statements)
     {
+        ValidateName(name);
+        ValidateReturnTypeName(returnTypeName);
+
         _modifiers = modifiers.ToList();
         _leadingComments = leadingComments.ToList();
         ReturnTypeName = returnTypeName;
@@ -34,8 +40,8 @@ public class Method
 
     public IReadOnlyCollection<MethodModifier> Modifiers => _modifiers;
 
-    public string ReturnTypeName { get; }
-    public string Name { get; }
+    public string ReturnTypeName { get; private set; }
+    public string Name { get; private set; }
 
     public IReadOnlyCollection<Parameter> Parameters => _parameters;
 
@@ -74,23 +80,94 @@ public class Method
             statements);
     }
 
-    public void AddLeadingComment(Comment comment)
+    public Method ChangeName(string name)
+    {
+        ValidateName(name);
+        Name = name;
+        return this;
+    }
+
+    public Method ChangeReturnTypeName(string returnTypeName)
+    {
+        ValidateReturnTypeName(returnTypeName);
+        ReturnTypeName = returnTypeName;
+        return this;
+    }
+
+    public Method AddLeadingComment(Comment comment)
     {
         _leadingComments.Add(comment);
+        return this;
     }
 
-    public void AddModifier(MethodModifier modifier)
+    public Method AddModifier(MethodModifier modifier)
     {
+        if (_modifiers.Contains(modifier))
+            return this;
+
         _modifiers.Add(modifier);
+        return this;
     }
 
-    public void AddParameter(Parameter parameter)
+    public Method RemoveModifier(MethodModifier modifier)
+    {
+        _modifiers.RemoveAll(m => m == modifier);
+        return this;
+    }
+
+    public Method AddParameters(IEnumerable<Parameter> parameters)
+    {
+        foreach (var parameter in parameters)
+        {
+            AddParameter(parameter);
+        }
+
+        return this;
+    }
+
+    public Method AddParameter(Parameter parameter)
     {
         _parameters.Add(parameter);
+        return this;
     }
 
-    public void AddStatement(Statement statement)
+    public Method RemoveParameter(Parameter parameter)
+    {
+        _parameters.Remove(parameter);
+        return this;
+    }
+
+    public Method AddStatements(IEnumerable<Statement> statements)
+    {
+        foreach (var statement in statements)
+        {
+            AddStatement(statement);
+        }
+
+        return this;
+    }
+
+    public Method AddStatement(Statement statement)
     {
         _statements.Add(statement);
+        return this;
+    }
+
+    public Method RemoveStatement(Statement statement)
+    {
+        _statements.Remove(statement);
+        return this;
+    }
+
+    private void ValidateReturnTypeName(string returnTypeName)
+    {
+        if (string.IsNullOrWhiteSpace(returnTypeName))
+            throw new ArgumentException("returnTypeName must not be empty", nameof(returnTypeName));
+    }
+
+    private void ValidateName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("name must not be empty", nameof(name));
     }
 }

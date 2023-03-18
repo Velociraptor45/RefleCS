@@ -18,5 +18,8 @@ public enum MethodModifier
     Internal,
 
     [SyntaxKind(SyntaxKind.AsyncKeyword)]
-    Async
+    Async,
+
+    [SyntaxKind(SyntaxKind.OverrideKeyword)]
+    Override
 }
