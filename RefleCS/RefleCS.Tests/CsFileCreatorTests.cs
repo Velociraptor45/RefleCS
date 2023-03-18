@@ -81,6 +81,58 @@ public sealed class App
         result.Should().BeEquivalentTo(expectedResult);
     }
 
+    [Fact]
+    public void FromCode_WithPrivateSetProperty_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = @"using System;
+using System.Linq;
+
+namespace MyApp;
+
+public class App
+{
+    public int MyProp { get; private set; }
+}";
+
+        var expectedResult = new CsFile(
+            new List<Using>
+            {
+                new("System"),
+                new("System.Linq")
+            },
+            new Namespace(
+                "MyApp",
+                new List<Class>
+                {
+                    new(
+                        new List<ClassModifier> { ClassModifier.Public },
+                        "App",
+                        new List<Constructor>(),
+                        new List<Property>
+                        {
+                            new(
+                                new List<PropertyModifier> { PropertyModifier.Public },
+                                "int",
+                                "MyProp",
+                                new List<PropertyAccessor>
+                                {
+                                    PropertyAccessor.Public(Accessor.Get),
+                                    new(Accessor.Set, new List<AccessorModifier> { AccessorModifier.Private })
+                                })
+                        },
+                        new List<Method>(),
+                        new List<BaseType>())
+                },
+                Enumerable.Empty<Record>()));
+
+        // Act
+        var result = new CsFileHandler().FromCode(content);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
     [Theory]
     [InlineData("", new MethodModifier[] { })]
     [InlineData("public", new[] { MethodModifier.Public })]
@@ -345,9 +397,9 @@ public record App(int Id)
                                 },
                                 "string",
                                 "Name",
-                                new List<Accessor>
+                                new List<PropertyAccessor>
                                 {
-                                    Accessor.Get
+                                    PropertyAccessor.Public(Accessor.Get)
                                 })
                         },
                         new List<Method>(),

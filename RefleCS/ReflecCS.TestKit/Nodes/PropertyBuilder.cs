@@ -18,9 +18,9 @@ public class PropertyBuilder : TestBuilderBase<Property>
         return WithModifiers(Enumerable.Empty<PropertyModifier>());
     }
 
-    public PropertyBuilder WithType(string type)
+    public PropertyBuilder WithTypeName(string typeName)
     {
-        FillConstructorWith(nameof(type), type);
+        FillConstructorWith(nameof(typeName), typeName);
         return this;
     }
 
@@ -30,7 +30,7 @@ public class PropertyBuilder : TestBuilderBase<Property>
         return this;
     }
 
-    public PropertyBuilder WithAccessors(IEnumerable<Accessor> accessors)
+    public PropertyBuilder WithAccessors(IEnumerable<PropertyAccessor> accessors)
     {
         FillConstructorWith(nameof(accessors), accessors);
         return this;
@@ -38,6 +38,6 @@ public class PropertyBuilder : TestBuilderBase<Property>
 
     public PropertyBuilder WithEmptyAccessors()
     {
-        return WithAccessors(Enumerable.Empty<Accessor>());
+        return WithAccessors(Enumerable.Empty<PropertyAccessor>());
     }
 }

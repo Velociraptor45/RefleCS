@@ -54,7 +54,7 @@ public class RecordConverterTestData : IEnumerable<object[]>
                         new List<PropertyModifier> { PropertyModifier.Public },
                         "string",
                         "Name",
-                        new List<Accessor> { Accessor.Get })
+                        new List<PropertyAccessor> { PropertyAccessor.Public(Accessor.Get) })
                 },
                 new List<Method>(),
                 new List<BaseType>())

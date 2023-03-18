@@ -216,87 +216,47 @@ public class PropertyTests
         }
     }
 
-    public class AddAccessor
+    public class AddPropertyAccessor
     {
-        private readonly AddAccessorFixture _fixture;
+        private readonly AddPropertyAccessorFixture _fixture;
 
-        public AddAccessor()
+        public AddPropertyAccessor()
         {
-            _fixture = new AddAccessorFixture();
+            _fixture = new AddPropertyAccessorFixture();
         }
 
         [Fact]
-        public void AddAccessor_WithAccessorNotAlreadyExisting_ShouldAddAccessor()
+        public void AddPropertyAccessor_ShouldAddPropertyAccessor()
         {
             // Arrange
-            _fixture.SetupAccessor();
-            _fixture.SetupInitialDifferentAccessor();
             var sut = _fixture.CreateSut();
+            _fixture.SetupPropertyAccessor();
             var accessorCount = sut.Accessors.Count;
 
-            TestPropertyNotSetException.ThrowIfNull(_fixture.Accessor);
+            TestPropertyNotSetException.ThrowIfNull(_fixture.PropertyAccessor);
 
             // Act
-            sut.AddAccessor(_fixture.Accessor.Value);
+            sut.AddAccessor(_fixture.PropertyAccessor);
 
             // Assert
-            sut.Accessors.Should().Contain(_fixture.Accessor.Value);
+            sut.Accessors.Should().Contain(_fixture.PropertyAccessor);
             sut.Accessors.Should().HaveCount(accessorCount + 1);
         }
 
-        [Fact]
-        public void AddAccessor_WithAccessorAlreadyExisting_ShouldNotAddAccessor()
-        {
-            // Arrange
-            _fixture.SetupAccessor();
-            _fixture.SetupInitialSameAccessor();
-            var sut = _fixture.CreateSut();
-            var accessorCount = sut.Accessors.Count;
-
-            TestPropertyNotSetException.ThrowIfNull(_fixture.Accessor);
-
-            // Act
-            sut.AddAccessor(_fixture.Accessor.Value);
-
-            // Assert
-            sut.Accessors.Should().Contain(_fixture.Accessor.Value);
-            sut.Accessors.Should().HaveCount(accessorCount);
-        }
-
-        private class AddAccessorFixture
+        private class AddPropertyAccessorFixture
         {
             private readonly PropertyBuilder _builder;
 
-            public AddAccessorFixture()
+            public AddPropertyAccessorFixture()
             {
                 _builder = new PropertyBuilder();
             }
 
-            public Accessor? Accessor { get; private set; }
+            public PropertyAccessor? PropertyAccessor { get; private set; }
 
-            public void SetupAccessor()
+            public void SetupPropertyAccessor()
             {
-                Accessor = new TestBuilder<Accessor>().Create();
-            }
-
-            public void SetupInitialDifferentAccessor()
-            {
-                TestPropertyNotSetException.ThrowIfNull(Accessor);
-
-                var builder = new TestBuilder<Accessor>();
-                builder.Customize(
-                    new EnumExclusionCustomization<Accessor>(new List<Accessor> { Accessor.Value }));
-
-                var accessors = builder.CreateMany(1);
-
-                _builder.WithAccessors(accessors);
-            }
-
-            public void SetupInitialSameAccessor()
-            {
-                TestPropertyNotSetException.ThrowIfNull(Accessor);
-
-                _builder.WithAccessors(new List<Accessor> { Accessor.Value });
+                PropertyAccessor = new PropertyAccessorBuilder().Create();
             }
 
             public Property CreateSut()
@@ -306,53 +266,53 @@ public class PropertyTests
         }
     }
 
-    public class RemoveAccessor
+    public class RemovePropertyAccessor
     {
-        private readonly RemoveAccessorFixture _fixture;
+        private readonly RemovePropertyAccessorFixture _fixture;
 
-        public RemoveAccessor()
+        public RemovePropertyAccessor()
         {
-            _fixture = new RemoveAccessorFixture();
+            _fixture = new RemovePropertyAccessorFixture();
         }
 
         [Fact]
-        public void RemoveAccessor_WithDuplicatedAccessors_ShouldRemoveAccessor()
+        public void RemovePropertyAccessor_ShouldRemovePropertyAccessor()
         {
             // Arrange
-            _fixture.SetupInitialDuplicatedAccessors();
+            _fixture.SetupInitialPropertyAccessors();
             var sut = _fixture.CreateSut();
-            _fixture.SetupAccessorToRemove(sut);
+            _fixture.SetupPropertyAccessorToRemove(sut);
+            var accessorCount = sut.Accessors.Count;
 
-            TestPropertyNotSetException.ThrowIfNull(_fixture.Accessor);
+            TestPropertyNotSetException.ThrowIfNull(_fixture.PropertyAccessor);
 
             // Act
-            sut.RemoveAccessor(_fixture.Accessor.Value);
+            sut.RemoveAccessor(_fixture.PropertyAccessor);
 
             // Assert
-            sut.Accessors.Should().BeEmpty();
+            sut.Accessors.Should().HaveCount(accessorCount - 1);
+            sut.Accessors.Should().NotContain(_fixture.PropertyAccessor);
         }
 
-        private class RemoveAccessorFixture
+        private class RemovePropertyAccessorFixture
         {
             private readonly PropertyBuilder _builder;
 
-            public RemoveAccessorFixture()
+            public RemovePropertyAccessorFixture()
             {
                 _builder = new PropertyBuilder();
             }
 
-            public Accessor? Accessor { get; private set; }
+            public PropertyAccessor? PropertyAccessor { get; private set; }
 
-            public void SetupInitialDuplicatedAccessors()
+            public void SetupInitialPropertyAccessors()
             {
-                var accessor = new TestBuilder<Accessor>().Create();
-
-                _builder.WithAccessors(new List<Accessor> { accessor, accessor });
+                _builder.WithAccessors(new PropertyAccessorBuilder().CreateMany(3));
             }
 
-            public void SetupAccessorToRemove(Property cls)
+            public void SetupPropertyAccessorToRemove(Property cls)
             {
-                Accessor = cls.Accessors.ElementAt(1);
+                PropertyAccessor = cls.Accessors.ElementAt(1);
             }
 
             public Property CreateSut()

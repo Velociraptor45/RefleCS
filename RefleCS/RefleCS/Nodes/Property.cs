@@ -5,10 +5,10 @@ namespace RefleCS.Nodes;
 public class Property
 {
     private readonly List<PropertyModifier> _modifiers;
-    private readonly List<Accessor> _accessors;
+    private readonly List<PropertyAccessor> _accessors;
 
     public Property(IEnumerable<PropertyModifier> modifiers, string typeName, string name,
-        IEnumerable<Accessor> accessors)
+        IEnumerable<PropertyAccessor> accessors)
     {
         ValidateName(name);
         ValidateTypeName(typeName);
@@ -24,7 +24,32 @@ public class Property
     public string TypeName { get; private set; }
     public string Name { get; private set; }
 
-    public IReadOnlyCollection<Accessor> Accessors => _accessors;
+    public IReadOnlyCollection<PropertyAccessor> Accessors => _accessors;
+
+    public static Property PublicGetOnly(string typeName, string name)
+    {
+        return new Property(
+            new List<PropertyModifier> { PropertyModifier.Public },
+            typeName,
+            name,
+            new List<PropertyAccessor>
+            {
+                PropertyAccessor.Public(Accessor.Get)
+            });
+    }
+
+    public static Property PublicGetPrivateSet(string typeName, string name)
+    {
+        return new Property(
+            new List<PropertyModifier> { PropertyModifier.Public },
+            typeName,
+            name,
+            new List<PropertyAccessor>
+            {
+                PropertyAccessor.Public(Accessor.Get),
+                new(Accessor.Set, new List<AccessorModifier> { AccessorModifier.Private })
+            });
+    }
 
     public Property ChangeName(string name)
     {
@@ -55,7 +80,7 @@ public class Property
         return this;
     }
 
-    public Property AddAccessor(Accessor accessor)
+    public Property AddAccessor(PropertyAccessor accessor)
     {
         if (_accessors.Contains(accessor))
             return this;
@@ -64,9 +89,9 @@ public class Property
         return this;
     }
 
-    public Property RemoveAccessor(Accessor accessor)
+    public Property RemoveAccessor(PropertyAccessor accessor)
     {
-        _accessors.RemoveAll(m => m == accessor);
+        _accessors.Remove(accessor);
         return this;
     }
 

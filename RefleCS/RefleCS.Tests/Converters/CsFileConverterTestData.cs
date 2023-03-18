@@ -44,7 +44,7 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                                     new List<PropertyModifier> { PropertyModifier.Public },
                                     "string",
                                     "Name",
-                                    new List<Accessor> { Accessor.Get })
+                                    new List<PropertyAccessor> { PropertyAccessor.Public(Accessor.Get) })
                             },
                             new List<Method>(),
                             new List<BaseType>())
@@ -86,7 +86,11 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                                     new List<PropertyModifier> { PropertyModifier.Public },
                                     "IReadOnlyCollection<int>",
                                     "Ids",
-                                    new List<Accessor> { Accessor.Get, Accessor.Set })
+                                    new List<PropertyAccessor>
+                                    {
+                                        PropertyAccessor.Public(Accessor.Get),
+                                        PropertyAccessor.Public(Accessor.Set)
+                                    })
                             },
                             new List<Method>
                             {

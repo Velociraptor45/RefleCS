@@ -85,6 +85,19 @@ internal class ModifierConverter
         }
     }
 
+    public AccessorModifier ToAccessorModifier(SyntaxToken modifier)
+    {
+        return ToModifier<AccessorModifier>(modifier);
+    }
+
+    public IEnumerable<AccessorModifier> ToAccessorModifier(IEnumerable<SyntaxToken> modifiers)
+    {
+        foreach (var modifier in modifiers)
+        {
+            yield return ToAccessorModifier(modifier);
+        }
+    }
+
     private T ToModifier<T>(SyntaxToken modifier) where T : Enum
     {
         if (!Enum.TryParse(typeof(T), modifier.ValueText, true, out var result))
@@ -121,6 +134,11 @@ internal class ModifierConverter
     public SyntaxTokenList ToNode(IEnumerable<MethodModifier> modifiers)
     {
         return ToNode<MethodModifier>(modifiers);
+    }
+
+    public SyntaxTokenList ToNode(IEnumerable<AccessorModifier> modifiers)
+    {
+        return ToNode<AccessorModifier>(modifiers);
     }
 
     private SyntaxTokenList ToNode<T>(IEnumerable<T> modifiers) where T : Enum

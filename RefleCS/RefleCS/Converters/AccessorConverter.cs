@@ -1,6 +1,6 @@
 ﻿using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using RefleCS.Enums;
+using RefleCS.Extensions;
 
 namespace RefleCS.Converters;
 
@@ -16,17 +16,8 @@ internal class AccessorConverter
         };
     }
 
-    public AccessorListSyntax ToNode(IEnumerable<Accessor> accessors)
+    public SyntaxKind ToNode(Accessor accessor)
     {
-        var accessorList = SyntaxFactory.List<AccessorDeclarationSyntax>();
-        foreach (var accessor in accessors)
-        {
-            var isGet = accessor == Accessor.Get;
-            var accs = SyntaxFactory.AccessorDeclaration(isGet ? SyntaxKind.GetAccessorDeclaration : SyntaxKind.SetAccessorDeclaration)
-                .WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-            accessorList = accessorList.Add(accs);
-        }
-
-        return SyntaxFactory.AccessorList(accessorList);
+        return accessor.GetSyntaxKind();
     }
 }
