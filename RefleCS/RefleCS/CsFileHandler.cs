@@ -20,6 +20,9 @@ public class CsFileHandler : ICsFileHandler
 
     public void SaveOrReplace(CsFile csFile, string filePath)
     {
+        if (string.IsNullOrWhiteSpace(filePath))
+            throw new ArgumentException("Value cannot be null or whitespace.", nameof(filePath));
+
         var text = _converter.ToNode(csFile)
             .SyntaxTree
             .GetRoot()
@@ -27,8 +30,12 @@ public class CsFileHandler : ICsFileHandler
             .GetText()
             .ToString();
 
-        if (File.Exists(filePath))
-            File.Delete(filePath);
+        var fileInfo = new FileInfo(filePath);
+        if (!fileInfo.Directory!.Exists)
+            fileInfo.Directory.Create();
+        
+        if (fileInfo.Exists)
+            fileInfo.Delete();
 
         File.WriteAllText(filePath, text);
     }
