@@ -8,12 +8,12 @@ public class CsFileHandler : ICsFileHandler
 {
     private static readonly CsFileConverter _converter = new();
 
-    public CsFile FromFile(string filePath)
+    public CsFile? FromFile(string filePath)
     {
         return _converter.ToCsFileFromPath(filePath);
     }
 
-    public CsFile FromCode(string content)
+    public CsFile? FromCode(string content)
     {
         return _converter.ToCsFileFromContent(content);
     }
@@ -33,7 +33,7 @@ public class CsFileHandler : ICsFileHandler
         var fileInfo = new FileInfo(filePath);
         if (!fileInfo.Directory!.Exists)
             fileInfo.Directory.Create();
-        
+
         if (fileInfo.Exists)
             fileInfo.Delete();
 

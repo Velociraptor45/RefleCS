@@ -291,13 +291,13 @@ public sealed class App
     public void FromCode_WithSuperclass_ShouldReturnExpectedResult()
     {
         // Arrange
-        var content = @$"using System;
+        var content = @"using System;
 
 namespace MyApp;
 
 public sealed class App : AnotherApp<int>, IImplement
-{{
-}}";
+{
+}";
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -337,18 +337,18 @@ public sealed class App : AnotherApp<int>, IImplement
     public void FromCode_WithRecord_ShouldReturnExpectedResult()
     {
         // Arrange
-        var content = @$"using System;
+        var content = @"using System;
 
 namespace MyApp;
 
 public record App(int Id)
-{{
+{
     public App(int id, string name) : this(id)
-    {{
-    }}
+    {
+    }
 
-    public string Name {{ get; }}
-}}";
+    public string Name { get; }
+}";
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -390,7 +390,7 @@ public record App(int Id)
                         },
                         new List<Property>
                         {
-                            new Property(
+                            new(
                                 new List<PropertyModifier>
                                 {
                                     PropertyModifier.Public
@@ -411,5 +411,31 @@ public record App(int Id)
 
         // Assert
         result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void FromCode_WithInvalidCS_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = "This is not valid C#";
+
+        // Act
+        var result = _sut.FromCode(content);
+
+        // Assert
+        result.Should().BeNull();
+    }
+
+    [Fact]
+    public void FromCode_WithValidCsButNoNamespaceStructure_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = "Console.WriteLine();";
+
+        // Act
+        var result = _sut.FromCode(content);
+
+        // Assert
+        result.Should().BeNull();
     }
 }
