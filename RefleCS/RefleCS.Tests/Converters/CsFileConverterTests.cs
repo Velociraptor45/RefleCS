@@ -7,12 +7,7 @@ namespace RefleCS.Tests.Converters;
 
 public class CsFileConverterTests
 {
-    private readonly CsFileConverter _sut;
-
-    public CsFileConverterTests()
-    {
-        _sut = new CsFileConverter();
-    }
+    private readonly CsFileConverter _sut = new();
 
     [Theory]
     [ClassData(typeof(CsFileConverterTestData))]
