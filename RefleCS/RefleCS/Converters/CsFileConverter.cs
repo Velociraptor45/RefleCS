@@ -33,7 +33,7 @@ internal class CsFileConverter
 
             return new CsFile(usings, nmsp);
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return null;
         }
