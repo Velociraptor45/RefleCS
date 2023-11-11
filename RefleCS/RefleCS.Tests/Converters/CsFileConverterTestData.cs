@@ -78,7 +78,7 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                                     new ConstructorInitializer(
                                         ConstructorInitializerType.Base,
                                         new List<Argument> { new("ids") }),
-                                    new List<Statement> { new("Console.Log(\"Hello, World!\"") })
+                                    new List<Statement> { new("Console.Log(\"Hello, World!\");") })
                             },
                             new List<Property>
                             {
@@ -106,7 +106,7 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                                             "int",
                                             "nextVal")
                                     },
-                                    new List<Statement> { new("nextVal = Ids.First()") })
+                                    new List<Statement> { new("nextVal = Ids.First();") })
                             },
                             new List<BaseType> { new("MyBaseClass") })
                     },
