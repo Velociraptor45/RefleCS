@@ -9,12 +9,7 @@ public class NamespaceTests
 {
     public class AddClass
     {
-        private readonly AddClassFixture _fixture;
-
-        public AddClass()
-        {
-            _fixture = new AddClassFixture();
-        }
+        private readonly AddClassFixture _fixture = new();
 
         [Fact]
         public void AddClass_WithValidData_ShouldAddClass()
@@ -26,9 +21,10 @@ public class NamespaceTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Class);
 
             // Act
-            sut.AddClass(_fixture.Class);
+            var result = sut.AddClass(_fixture.Class);
 
             // Assert
+            result.Should().Be(result);
             sut.Classes.Should().Contain(_fixture.Class);
         }
 
@@ -45,12 +41,7 @@ public class NamespaceTests
 
     public class RemoveClass
     {
-        private readonly RemoveClassFixture _fixture;
-
-        public RemoveClass()
-        {
-            _fixture = new RemoveClassFixture();
-        }
+        private readonly RemoveClassFixture _fixture = new();
 
         [Fact]
         public void RemoveClass_WithValidData_ShouldRemoveClass()
@@ -62,9 +53,10 @@ public class NamespaceTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Class);
 
             // Act
-            sut.RemoveClass(_fixture.Class);
+            var result = sut.RemoveClass(_fixture.Class);
 
             // Assert
+            result.Should().Be(result);
             sut.Classes.Should().NotContain(_fixture.Class);
         }
 
