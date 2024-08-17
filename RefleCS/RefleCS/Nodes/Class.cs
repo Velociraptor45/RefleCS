@@ -50,61 +50,71 @@ public class Class
         return cls;
     }
 
-    public void AddBaseType(BaseType baseType)
+    public Class AddBaseType(BaseType baseType)
     {
         _baseTypes.Add(baseType);
+        return this;
     }
 
-    public void RemoveBaseType(BaseType baseType)
+    public Class RemoveBaseType(BaseType baseType)
     {
         _baseTypes.Remove(baseType);
+        return this;
     }
 
-    public void RemoveAllBaseTypes()
+    public Class RemoveAllBaseTypes()
     {
         _baseTypes.Clear();
+        return this;
     }
 
-    public void AddMethod(Method method)
+    public Class AddMethod(Method method)
     {
         _methods.Add(method);
+        return this;
     }
 
-    public void RemoveMethod(Method method)
+    public Class RemoveMethod(Method method)
     {
         _methods.Remove(method);
+        return this;
     }
 
-    public void AddProperty(Property property)
+    public Class AddProperty(Property property)
     {
         _properties.Add(property);
+        return this;
     }
 
-    public void RemoveProperty(Property property)
+    public Class RemoveProperty(Property property)
     {
         _properties.Remove(property);
+        return this;
     }
 
-    public void AddConstructor(Constructor constructor)
+    public Class AddConstructor(Constructor constructor)
     {
         _constructors.Add(constructor);
+        return this;
     }
 
-    public void RemoveConstructor(Constructor constructor)
+    public Class RemoveConstructor(Constructor constructor)
     {
         _constructors.Remove(constructor);
+        return this;
     }
 
-    public void AddModifier(ClassModifier modifier)
+    public Class AddModifier(ClassModifier modifier)
     {
-        if (_modifiers.Contains(modifier))
-            return;
+        if (!_modifiers.Contains(modifier))
+            _modifiers.Add(modifier);
 
-        _modifiers.Add(modifier);
+        return this;
     }
 
-    public void RemoveModifier(ClassModifier modifier)
+    public Class RemoveModifier(ClassModifier modifier)
     {
         _modifiers.RemoveAll(m => m == modifier);
+        return this;
     }
 }
