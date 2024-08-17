@@ -3,7 +3,7 @@ using AutoFixture.AutoMoq;
 using RefleCS.TestTools.AutoFixture;
 using System.Linq.Expressions;
 
-namespace ReflecCS.TestKit;
+namespace RefleCS.TestKit;
 
 public class TestBuilderBase<TModel> : Fixture
 {

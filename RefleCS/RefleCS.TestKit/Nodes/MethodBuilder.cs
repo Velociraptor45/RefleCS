@@ -1,8 +1,7 @@
 using AutoFixture.Kernel;
-using ReflecCS.TestKit;
-using ReflecCS.TestKit.Common.Selectors;
 using RefleCS.Enums;
 using RefleCS.Nodes;
+using RefleCS.TestKit.Common.Selectors;
 
 namespace RefleCS.TestKit.Nodes;
 

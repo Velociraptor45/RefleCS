@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using ReflecCS.TestKit;
-using ReflecCS.TestKit.Common.Customizations;
 using RefleCS.Enums;
 using RefleCS.Nodes;
+using RefleCS.TestKit;
+using RefleCS.TestKit.Common.Customizations;
 using RefleCS.TestKit.Nodes;
 using RefleCS.TestTools.Exceptions;
 
@@ -114,12 +114,7 @@ public class PropertyTests
 
     public class AddModifier
     {
-        private readonly AddModifierFixture _fixture;
-
-        public AddModifier()
-        {
-            _fixture = new AddModifierFixture();
-        }
+        private readonly AddModifierFixture _fixture = new();
 
         [Fact]
         public void AddModifier_WithModifierNotAlreadyExisting_ShouldAddModifier()
@@ -161,12 +156,7 @@ public class PropertyTests
 
         private class AddModifierFixture
         {
-            private readonly PropertyBuilder _builder;
-
-            public AddModifierFixture()
-            {
-                _builder = new PropertyBuilder();
-            }
+            private readonly PropertyBuilder _builder = new();
 
             public PropertyModifier? Modifier { get; private set; }
 
@@ -204,12 +194,7 @@ public class PropertyTests
 
     public class RemoveModifier
     {
-        private readonly RemoveModifierFixture _fixture;
-
-        public RemoveModifier()
-        {
-            _fixture = new RemoveModifierFixture();
-        }
+        private readonly RemoveModifierFixture _fixture = new();
 
         [Fact]
         public void RemoveModifier_WithDuplicatedModifiers_ShouldRemoveModifier()
@@ -230,12 +215,7 @@ public class PropertyTests
 
         private class RemoveModifierFixture
         {
-            private readonly PropertyBuilder _builder;
-
-            public RemoveModifierFixture()
-            {
-                _builder = new PropertyBuilder();
-            }
+            private readonly PropertyBuilder _builder = new();
 
             public PropertyModifier? Modifier { get; private set; }
 
@@ -260,12 +240,7 @@ public class PropertyTests
 
     public class AddPropertyAccessor
     {
-        private readonly AddPropertyAccessorFixture _fixture;
-
-        public AddPropertyAccessor()
-        {
-            _fixture = new AddPropertyAccessorFixture();
-        }
+        private readonly AddPropertyAccessorFixture _fixture = new();
 
         [Fact]
         public void AddPropertyAccessor_ShouldAddPropertyAccessor()
@@ -287,12 +262,7 @@ public class PropertyTests
 
         private class AddPropertyAccessorFixture
         {
-            private readonly PropertyBuilder _builder;
-
-            public AddPropertyAccessorFixture()
-            {
-                _builder = new PropertyBuilder();
-            }
+            private readonly PropertyBuilder _builder = new();
 
             public PropertyAccessor? PropertyAccessor { get; private set; }
 
@@ -310,12 +280,7 @@ public class PropertyTests
 
     public class RemovePropertyAccessor
     {
-        private readonly RemovePropertyAccessorFixture _fixture;
-
-        public RemovePropertyAccessor()
-        {
-            _fixture = new RemovePropertyAccessorFixture();
-        }
+        private readonly RemovePropertyAccessorFixture _fixture = new();
 
         [Fact]
         public void RemovePropertyAccessor_ShouldRemovePropertyAccessor()
@@ -338,12 +303,7 @@ public class PropertyTests
 
         private class RemovePropertyAccessorFixture
         {
-            private readonly PropertyBuilder _builder;
-
-            public RemovePropertyAccessorFixture()
-            {
-                _builder = new PropertyBuilder();
-            }
+            private readonly PropertyBuilder _builder = new();
 
             public PropertyAccessor? PropertyAccessor { get; private set; }
 
