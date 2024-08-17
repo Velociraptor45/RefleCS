@@ -9,24 +9,34 @@ internal class CsFileConverter
     private readonly NamespaceConverter _namespaceConverter = new();
     private readonly UsingConverter _usingConverter = new();
 
-    public CsFile ToCsFileFromPath(string filePath)
+    public CsFile? ToCsFileFromPath(string filePath)
     {
         var content = File.ReadAllText(filePath);
         return ToCsFileFromContent(content);
     }
 
-    public CsFile ToCsFileFromContent(string fileContent)
+    public CsFile? ToCsFileFromContent(string fileContent)
     {
         var tree = CSharpSyntaxTree.ParseText(fileContent);
+        if (tree.GetDiagnostics().Any())
+            return null;
+
         var root = tree.GetRoot();
 
-        var usingDeclarations = root.DescendantNodes().OfType<UsingDirectiveSyntax>();
-        var usings = _usingConverter.ToUsing(usingDeclarations);
+        try
+        {
+            var usingDeclarations = root.DescendantNodes().OfType<UsingDirectiveSyntax>();
+            var usings = _usingConverter.ToUsing(usingDeclarations);
 
-        var nmspDeclaration = root.DescendantNodes().OfType<FileScopedNamespaceDeclarationSyntax>().First();
-        var nmsp = _namespaceConverter.ToNamespace(nmspDeclaration);
+            var nmspDeclaration = root.DescendantNodes().OfType<FileScopedNamespaceDeclarationSyntax>().First();
+            var nmsp = _namespaceConverter.ToNamespace(nmspDeclaration);
 
-        return new CsFile(usings, nmsp);
+            return new CsFile(usings, nmsp);
+        }
+        catch (Exception)
+        {
+            return null;
+        }
     }
 
     public CompilationUnitSyntax ToNode(CsFile file)

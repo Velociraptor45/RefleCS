@@ -51,7 +51,8 @@ var file = new CsFile(
                         })
                 },
                 new List<BaseType>())
-        }));
+        },
+        Enumerable.Empty<Record>()));
 
 new CsFileHandler().SaveOrReplace(file, @"C:/Temp/mycsfile.cs");
 ```
@@ -81,6 +82,7 @@ file.Nmsp.Classes.First()
             new List<ConstructorModifier>() { ConstructorModifier.Public },
             "App",
             new List<Parameter>(),
+            null,
             new List<Statement>() { new("Console.WriteLine(\"Ctor called!\");") }
         ));
 ```
@@ -111,6 +113,7 @@ file.Nmsp.Classes.First()
             new List<ConstructorModifier>() { ConstructorModifier.Public },
             "App",
             new List<Parameter>(),
+            null,
             new List<Statement>() { new("Console.WriteLine(\"Ctor called!\");") }
         ));
 
