@@ -101,118 +101,130 @@ public class Record
     /// Adds a base type to the record. Can be a class or an interface.
     /// </summary>
     /// <param name="baseType"></param>
-    public void AddBaseType(BaseType baseType)
+    public Record AddBaseType(BaseType baseType)
     {
         _baseTypes.Add(baseType);
+        return this;
     }
 
     /// <summary>
     /// Removes a base type from the record. If the base type does not exist, nothing will happen.
     /// </summary>
     /// <param name="baseType"></param>
-    public void RemoveBaseType(BaseType baseType)
+    public Record RemoveBaseType(BaseType baseType)
     {
         _baseTypes.Remove(baseType);
+        return this;
     }
 
     /// <summary>
     /// Removes all base types from the record.
     /// </summary>
-    public void RemoveAllBaseTypes()
+    public Record RemoveAllBaseTypes()
     {
         _baseTypes.Clear();
+        return this;
     }
 
     /// <summary>
     /// Adds a method to the record.
     /// </summary>
     /// <param name="method"></param>
-    public void AddMethod(Method method)
+    public Record AddMethod(Method method)
     {
         _methods.Add(method);
+        return this;
     }
 
     /// <summary>
     /// Removes a method from the record. If the method does not exist, nothing will happen.
     /// </summary>
     /// <param name="method"></param>
-    public void RemoveMethod(Method method)
+    public Record RemoveMethod(Method method)
     {
         _methods.Remove(method);
+        return this;
     }
 
     /// <summary>
     /// Adds a property to the record.
     /// </summary>
     /// <param name="property"></param>
-    public void AddProperty(Property property)
+    public Record AddProperty(Property property)
     {
         _properties.Add(property);
+        return this;
     }
 
     /// <summary>
     /// Removes a property from the record. If the property does not exist, nothing will happen.
     /// </summary>
     /// <param name="property"></param>
-    public void RemoveProperty(Property property)
+    public Record RemoveProperty(Property property)
     {
         _properties.Remove(property);
+        return this;
     }
 
     /// <summary>
     /// Adds a constructor to the record.
     /// </summary>
     /// <param name="constructor"></param>
-    public void AddConstructor(Constructor constructor)
+    public Record AddConstructor(Constructor constructor)
     {
         _constructors.Add(constructor);
+        return this;
     }
 
     /// <summary>
     /// Removes a constructor from the record. If the constructor does not exist, nothing will happen.
     /// </summary>
     /// <param name="constructor"></param>
-    public void RemoveConstructor(Constructor constructor)
+    public Record RemoveConstructor(Constructor constructor)
     {
         _constructors.Remove(constructor);
+        return this;
     }
 
     /// <summary>
     /// Adds a modifier to the record. If the modifier already exists, it will not be added again.
     /// </summary>
     /// <param name="modifier"></param>
-    public void AddModifier(ClassModifier modifier)
+    public Record AddModifier(ClassModifier modifier)
     {
         if (!_modifiers.Contains(modifier))
             _modifiers.Add(modifier);
 
-        return;
+        return this;
     }
 
     /// <summary>
     /// Removes a modifier from the record. If the modifier does not exist, nothing will happen.
     /// </summary>
     /// <param name="modifier"></param>
-    public void RemoveModifier(ClassModifier modifier)
+    public Record RemoveModifier(ClassModifier modifier)
     {
         _modifiers.RemoveAll(m => m == modifier);
+        return this;
     }
 
     /// <summary>
     /// Adds a parameter to the record.
     /// </summary>
     /// <param name="parameter"></param>
-    public void AddParameter(Parameter parameter)
+    public Record AddParameter(Parameter parameter)
     {
         _parameters.Add(parameter);
+        return this;
     }
 
     /// <summary>
     /// Removes a parameter from the record. If the parameter does not exist, nothing will happen.
     /// </summary>
     /// <param name="parameter"></param>
-    public void RemoveParameter(Parameter parameter)
+    public Record RemoveParameter(Parameter parameter)
     {
         _parameters.Remove(parameter);
+        return this;
     }
 }

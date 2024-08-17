@@ -4,7 +4,7 @@ using RefleCS.Nodes;
 
 namespace RefleCS.Converters;
 
-public class PropertyAccessorConverter
+internal class PropertyAccessorConverter
 {
     private readonly AccessorConverter _accessorConverter = new();
     private readonly ModifierConverter _modifierConverter = new();
