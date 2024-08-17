@@ -12,12 +12,7 @@ public class ClassTests
 {
     public class AddProperty
     {
-        private readonly AddPropertyFixture _fixture;
-
-        public AddProperty()
-        {
-            _fixture = new AddPropertyFixture();
-        }
+        private readonly AddPropertyFixture _fixture = new();
 
         [Fact]
         public void AddProperty_ShouldAddProperty()
@@ -30,21 +25,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Property);
 
             // Act
-            sut.AddProperty(_fixture.Property);
+            var result = sut.AddProperty(_fixture.Property);
 
             // Assert
+            result.Should().Be(sut);
             sut.Properties.Should().Contain(_fixture.Property);
             sut.Properties.Should().HaveCount(parameterCount + 1);
         }
 
         private class AddPropertyFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public AddPropertyFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public Property? Property { get; private set; }
 
@@ -62,12 +53,7 @@ public class ClassTests
 
     public class RemoveProperty
     {
-        private readonly RemovePropertyFixture _fixture;
-
-        public RemoveProperty()
-        {
-            _fixture = new RemovePropertyFixture();
-        }
+        private readonly RemovePropertyFixture _fixture = new();
 
         [Fact]
         public void RemoveProperty_ShouldRemoveProperty()
@@ -81,21 +67,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Property);
 
             // Act
-            sut.RemoveProperty(_fixture.Property);
+            var result = sut.RemoveProperty(_fixture.Property);
 
             // Assert
+            result.Should().Be(sut);
             sut.Properties.Should().HaveCount(parameterCount - 1);
             sut.Properties.Should().NotContain(_fixture.Property);
         }
 
         private class RemovePropertyFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public RemovePropertyFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public Property? Property { get; private set; }
 
@@ -119,12 +101,7 @@ public class ClassTests
 
     public class AddBaseType
     {
-        private readonly AddBaseTypeFixture _fixture;
-
-        public AddBaseType()
-        {
-            _fixture = new AddBaseTypeFixture();
-        }
+        private readonly AddBaseTypeFixture _fixture = new();
 
         [Fact]
         public void AddBaseType_ShouldAddBaseType()
@@ -137,21 +114,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.BaseType);
 
             // Act
-            sut.AddBaseType(_fixture.BaseType);
+            var result = sut.AddBaseType(_fixture.BaseType);
 
             // Assert
+            result.Should().Be(sut);
             sut.BaseTypes.Should().Contain(_fixture.BaseType);
             sut.BaseTypes.Should().HaveCount(parameterCount + 1);
         }
 
         private class AddBaseTypeFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public AddBaseTypeFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public BaseType? BaseType { get; private set; }
 
@@ -169,12 +142,7 @@ public class ClassTests
 
     public class RemoveBaseType
     {
-        private readonly RemoveBaseTypeFixture _fixture;
-
-        public RemoveBaseType()
-        {
-            _fixture = new RemoveBaseTypeFixture();
-        }
+        private readonly RemoveBaseTypeFixture _fixture = new();
 
         [Fact]
         public void RemoveBaseType_ShouldRemoveBaseType()
@@ -188,21 +156,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.BaseType);
 
             // Act
-            sut.RemoveBaseType(_fixture.BaseType);
+            var result = sut.RemoveBaseType(_fixture.BaseType);
 
             // Assert
+            result.Should().Be(sut);
             sut.BaseTypes.Should().HaveCount(parameterCount - 1);
             sut.BaseTypes.Should().NotContain(_fixture.BaseType);
         }
 
         private class RemoveBaseTypeFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public RemoveBaseTypeFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public BaseType? BaseType { get; private set; }
 
@@ -226,12 +190,7 @@ public class ClassTests
 
     public class RemoveAllBaseTypes
     {
-        private readonly RemoveAllBaseTypesFixture _fixture;
-
-        public RemoveAllBaseTypes()
-        {
-            _fixture = new RemoveAllBaseTypesFixture();
-        }
+        private readonly RemoveAllBaseTypesFixture _fixture = new();
 
         [Fact]
         public void RemoveAllBaseTypes_ShouldRemoveBaseType()
@@ -241,20 +200,16 @@ public class ClassTests
             var sut = _fixture.CreateSut();
 
             // Act
-            sut.RemoveAllBaseTypes();
+            var result = sut.RemoveAllBaseTypes();
 
             // Assert
+            result.Should().Be(sut);
             sut.BaseTypes.Should().BeEmpty();
         }
 
         private class RemoveAllBaseTypesFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public RemoveAllBaseTypesFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public void SetupInitialBaseTypes()
             {
@@ -271,12 +226,7 @@ public class ClassTests
 
     public class AddMethod
     {
-        private readonly AddMethodFixture _fixture;
-
-        public AddMethod()
-        {
-            _fixture = new AddMethodFixture();
-        }
+        private readonly AddMethodFixture _fixture = new();
 
         [Fact]
         public void AddMethod_ShouldAddMethod()
@@ -289,21 +239,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Method);
 
             // Act
-            sut.AddMethod(_fixture.Method);
+            var result = sut.AddMethod(_fixture.Method);
 
             // Assert
+            result.Should().Be(sut);
             sut.Methods.Should().Contain(_fixture.Method);
             sut.Methods.Should().HaveCount(parameterCount + 1);
         }
 
         private class AddMethodFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public AddMethodFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public Method? Method { get; private set; }
 
@@ -321,12 +267,7 @@ public class ClassTests
 
     public class RemoveMethod
     {
-        private readonly RemoveMethodFixture _fixture;
-
-        public RemoveMethod()
-        {
-            _fixture = new RemoveMethodFixture();
-        }
+        private readonly RemoveMethodFixture _fixture = new();
 
         [Fact]
         public void RemoveMethod_ShouldRemoveMethod()
@@ -340,21 +281,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Method);
 
             // Act
-            sut.RemoveMethod(_fixture.Method);
+            var result = sut.RemoveMethod(_fixture.Method);
 
             // Assert
+            result.Should().Be(sut);
             sut.Methods.Should().HaveCount(parameterCount - 1);
             sut.Methods.Should().NotContain(_fixture.Method);
         }
 
         private class RemoveMethodFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public RemoveMethodFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public Method? Method { get; private set; }
 
@@ -378,12 +315,7 @@ public class ClassTests
 
     public class AddConstructor
     {
-        private readonly AddConstructorFixture _fixture;
-
-        public AddConstructor()
-        {
-            _fixture = new AddConstructorFixture();
-        }
+        private readonly AddConstructorFixture _fixture = new();
 
         [Fact]
         public void AddConstructor_ShouldAddConstructor()
@@ -396,21 +328,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Constructor);
 
             // Act
-            sut.AddConstructor(_fixture.Constructor);
+            var result = sut.AddConstructor(_fixture.Constructor);
 
             // Assert
+            result.Should().Be(sut);
             sut.Constructors.Should().Contain(_fixture.Constructor);
             sut.Constructors.Should().HaveCount(parameterCount + 1);
         }
 
         private class AddConstructorFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public AddConstructorFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public Constructor? Constructor { get; private set; }
 
@@ -428,12 +356,7 @@ public class ClassTests
 
     public class RemoveConstructor
     {
-        private readonly RemoveConstructorFixture _fixture;
-
-        public RemoveConstructor()
-        {
-            _fixture = new RemoveConstructorFixture();
-        }
+        private readonly RemoveConstructorFixture _fixture = new();
 
         [Fact]
         public void RemoveConstructor_ShouldRemoveConstructor()
@@ -447,21 +370,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Constructor);
 
             // Act
-            sut.RemoveConstructor(_fixture.Constructor);
+            var result = sut.RemoveConstructor(_fixture.Constructor);
 
             // Assert
+            result.Should().Be(sut);
             sut.Constructors.Should().HaveCount(parameterCount - 1);
             sut.Constructors.Should().NotContain(_fixture.Constructor);
         }
 
         private class RemoveConstructorFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public RemoveConstructorFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public Constructor? Constructor { get; private set; }
 
@@ -485,12 +404,7 @@ public class ClassTests
 
     public class AddModifier
     {
-        private readonly AddModifierFixture _fixture;
-
-        public AddModifier()
-        {
-            _fixture = new AddModifierFixture();
-        }
+        private readonly AddModifierFixture _fixture = new();
 
         [Fact]
         public void AddModifier_WithModifierNotAlreadyExisting_ShouldAddModifier()
@@ -504,9 +418,10 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Modifier);
 
             // Act
-            sut.AddModifier(_fixture.Modifier.Value);
+            var result = sut.AddModifier(_fixture.Modifier.Value);
 
             // Assert
+            result.Should().Be(sut);
             sut.Modifiers.Should().Contain(_fixture.Modifier.Value);
             sut.Modifiers.Should().HaveCount(parameterCount + 1);
         }
@@ -523,21 +438,17 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Modifier);
 
             // Act
-            sut.AddModifier(_fixture.Modifier.Value);
+            var result = sut.AddModifier(_fixture.Modifier.Value);
 
             // Assert
+            result.Should().Be(sut);
             sut.Modifiers.Should().Contain(_fixture.Modifier.Value);
             sut.Modifiers.Should().HaveCount(parameterCount);
         }
 
         private class AddModifierFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public AddModifierFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public ClassModifier? Modifier { get; private set; }
 
@@ -575,12 +486,7 @@ public class ClassTests
 
     public class RemoveModifier
     {
-        private readonly RemoveModifierFixture _fixture;
-
-        public RemoveModifier()
-        {
-            _fixture = new RemoveModifierFixture();
-        }
+        private readonly RemoveModifierFixture _fixture = new();
 
         [Fact]
         public void RemoveModifier_WithDuplicatedModifiers_ShouldRemoveModifier()
@@ -593,20 +499,16 @@ public class ClassTests
             TestPropertyNotSetException.ThrowIfNull(_fixture.Modifier);
 
             // Act
-            sut.RemoveModifier(_fixture.Modifier.Value);
+            var result = sut.RemoveModifier(_fixture.Modifier.Value);
 
             // Assert
+            result.Should().Be(sut);
             sut.Modifiers.Should().BeEmpty();
         }
 
         private class RemoveModifierFixture
         {
-            private readonly ClassBuilder _builder;
-
-            public RemoveModifierFixture()
-            {
-                _builder = new ClassBuilder();
-            }
+            private readonly ClassBuilder _builder = new();
 
             public ClassModifier? Modifier { get; private set; }
 

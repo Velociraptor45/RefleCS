@@ -13,6 +13,6 @@ internal class BaseTypeConverter
 
     public IEnumerable<BaseTypeSyntax> ToNode(IEnumerable<BaseType> baseTypes)
     {
-        return baseTypes.Select(t => SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(t.Value)));
+        return baseTypes.Select(t => SyntaxFactory.SimpleBaseType(SyntaxFactory.ParseTypeName(t.Name)));
     }
 }

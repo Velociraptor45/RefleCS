@@ -5,7 +5,7 @@ using RefleCS.Nodes;
 
 namespace RefleCS.Converters;
 
-public class ConstructorInitializerConverter
+internal class ConstructorInitializerConverter
 {
     private readonly ModifierConverter _modifierConverter = new();
     private readonly ArgumentConverter _argumentConverter = new();

@@ -2,6 +2,9 @@
 
 namespace RefleCS;
 
+/// <summary>
+/// Interface for loading and saving individual C# files.
+/// </summary>
 public interface ICsFileHandler
 {
     /// <summary>
