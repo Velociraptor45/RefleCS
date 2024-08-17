@@ -1,12 +1,19 @@
+using AutoFixture.Kernel;
 using RefleCS.Enums;
 using RefleCS.Nodes;
 using ReflecCS.TestKit;
-using System;
-using System.Collections.Generic;
+using ReflecCS.TestKit.Common.Selectors;
 
 namespace RefleCS.TestKit.Nodes;
+
 public class ParameterBuilder : TestBuilderBase<Parameter>
 {
+    public ParameterBuilder()
+    {
+        Customize<Parameter>(c =>
+            c.FromFactory(new MethodInvoker(new CtorSelectionQuery(typeof(IEnumerable<ParameterModifier>)))));
+    }
+
     public ParameterBuilder WithTypeName(string typeName)
     {
         FillConstructorWith(nameof(typeName), typeName);
