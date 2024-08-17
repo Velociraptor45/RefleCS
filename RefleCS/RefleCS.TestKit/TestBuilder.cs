@@ -2,7 +2,7 @@
 using RefleCS.TestTools.AutoFixture;
 using System.Linq.Expressions;
 
-namespace ReflecCS.TestKit;
+namespace RefleCS.TestKit;
 
 public class TestBuilder<TModel, TBuilder> : TestBuilderBase<TModel>
     where TBuilder : TestBuilder<TModel, TBuilder>

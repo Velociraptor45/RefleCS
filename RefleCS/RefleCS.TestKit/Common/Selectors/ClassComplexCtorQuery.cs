@@ -1,7 +1,7 @@
 ﻿using AutoFixture.Kernel;
 using RefleCS.Enums;
 
-namespace ReflecCS.TestKit.Common.Selectors;
+namespace RefleCS.TestKit.Common.Selectors;
 
 public class ClassComplexCtorQuery : IMethodQuery
 {

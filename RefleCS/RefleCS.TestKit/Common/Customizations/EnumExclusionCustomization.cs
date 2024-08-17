@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using AutoFixture.Kernel;
 
-namespace ReflecCS.TestKit.Common.Customizations;
+namespace RefleCS.TestKit.Common.Customizations;
 
 public class EnumExclusionCustomization<T> : ICustomization
     where T : Enum

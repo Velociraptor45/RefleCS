@@ -1,87 +1,75 @@
 using AutoFixture.Kernel;
-using ReflecCS.TestKit;
-using ReflecCS.TestKit.Common.Selectors;
 using RefleCS.Enums;
 using RefleCS.Nodes;
+using RefleCS.TestKit.Common.Selectors;
 
 namespace RefleCS.TestKit.Nodes;
 
-public class RecordBuilder : TestBuilderBase<Record>
+public class ClassBuilder : TestBuilderBase<Class>
 {
-    public RecordBuilder()
+    public ClassBuilder()
     {
-        Customize<Record>(c =>
+        Customize<Class>(c =>
             c.FromFactory(new MethodInvoker(new CtorSelectionQuery(typeof(IEnumerable<ClassModifier>)))));
     }
 
-    public RecordBuilder WithName(string name)
+    public ClassBuilder WithName(string name)
     {
         FillConstructorWith(nameof(name), name);
         return this;
     }
 
-    public RecordBuilder WithModifiers(IEnumerable<ClassModifier> modifiers)
+    public ClassBuilder WithModifiers(IEnumerable<ClassModifier> modifiers)
     {
         FillConstructorWith(nameof(modifiers), modifiers);
         return this;
     }
 
-    public RecordBuilder WithEmptyModifiers()
+    public ClassBuilder WithEmptyModifiers()
     {
         return WithModifiers(Enumerable.Empty<ClassModifier>());
     }
 
-    public RecordBuilder WithParameters(IEnumerable<Parameter> parameters)
-    {
-        FillConstructorWith(nameof(parameters), parameters);
-        return this;
-    }
-
-    public RecordBuilder WithEmptyParameters()
-    {
-        return WithParameters(Enumerable.Empty<Parameter>());
-    }
-
-    public RecordBuilder WithConstructors(IEnumerable<Constructor> constructors)
+    public ClassBuilder WithConstructors(IEnumerable<Constructor> constructors)
     {
         FillConstructorWith(nameof(constructors), constructors);
         return this;
     }
 
-    public RecordBuilder WithEmptyConstructors()
+    public ClassBuilder WithEmptyConstructors()
     {
         return WithConstructors(Enumerable.Empty<Constructor>());
     }
 
-    public RecordBuilder WithProperties(IEnumerable<Property> properties)
+    public ClassBuilder WithProperties(IEnumerable<Property> properties)
     {
         FillConstructorWith(nameof(properties), properties);
         return this;
     }
 
-    public RecordBuilder WithEmptyProperties()
+    public ClassBuilder WithEmptyProperties()
     {
         return WithProperties(Enumerable.Empty<Property>());
     }
 
-    public RecordBuilder WithMethods(IEnumerable<Method> methods)
+    public ClassBuilder WithMethods(IEnumerable<Method> methods)
     {
         FillConstructorWith(nameof(methods), methods);
         return this;
     }
 
-    public RecordBuilder WithEmptyMethods()
+    public ClassBuilder WithEmptyMethods()
     {
         return WithMethods(Enumerable.Empty<Method>());
     }
 
-    public RecordBuilder WithBaseTypes(IEnumerable<BaseType> baseTypes)
+    public ClassBuilder WithBaseTypes(IEnumerable<BaseType> baseTypes)
     {
         FillConstructorWith(nameof(baseTypes), baseTypes);
         return this;
     }
 
-    public RecordBuilder WithEmptyBaseTypes()
+    public ClassBuilder WithEmptyBaseTypes()
     {
         return WithBaseTypes(Enumerable.Empty<BaseType>());
     }

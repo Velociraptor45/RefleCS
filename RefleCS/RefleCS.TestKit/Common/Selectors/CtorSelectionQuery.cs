@@ -1,6 +1,6 @@
 ﻿using AutoFixture.Kernel;
 
-namespace ReflecCS.TestKit.Common.Selectors;
+namespace RefleCS.TestKit.Common.Selectors;
 
 public class CtorSelectionQuery : IMethodQuery
 {

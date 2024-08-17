@@ -1,6 +1,6 @@
 ﻿using RefleCS.Nodes;
 
-namespace ReflecCS.TestKit.Nodes;
+namespace RefleCS.TestKit.Nodes;
 
 public class StatementBuilder : TestBuilderBase<Statement>
 {
