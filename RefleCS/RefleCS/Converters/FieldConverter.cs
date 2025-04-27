@@ -35,9 +35,7 @@ internal class FieldConverter
 
         var initializer = field.Initializer is null
             ? null
-            : SyntaxFactory.EqualsValueClause(
-                //SyntaxFactory.Token(SyntaxKind.EqualsValueClause),
-                SyntaxFactory.ParseExpression(field.Initializer.Value));
+            : SyntaxFactory.EqualsValueClause(SyntaxFactory.ParseExpression(field.Initializer.Value));
 
         var variable = SyntaxFactory.VariableDeclarator(field.TypeName)
             .WithIdentifier(SyntaxFactory.ParseToken(field.Name))
