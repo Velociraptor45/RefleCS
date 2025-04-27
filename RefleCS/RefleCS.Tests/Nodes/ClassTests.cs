@@ -10,6 +10,94 @@ namespace RefleCS.Tests.Nodes;
 
 public class ClassTests
 {
+    public class AddField
+    {
+        private readonly AddFieldFixture _fixture = new();
+
+        [Fact]
+        public void AddField_ShouldAddField()
+        {
+            // Arrange
+            var sut = _fixture.CreateSut();
+            _fixture.SetupField();
+            var parameterCount = sut.Fields.Count;
+
+            TestPropertyNotSetException.ThrowIfNull(_fixture.Field);
+
+            // Act
+            var result = sut.AddField(_fixture.Field);
+
+            // Assert
+            result.Should().Be(sut);
+            sut.Fields.Should().Contain(_fixture.Field);
+            sut.Fields.Should().HaveCount(parameterCount + 1);
+        }
+
+        private class AddFieldFixture
+        {
+            private readonly ClassBuilder _builder = new();
+
+            public Field? Field { get; private set; }
+
+            public void SetupField()
+            {
+                Field = new FieldBuilder().Create();
+            }
+
+            public Class CreateSut()
+            {
+                return _builder.Create();
+            }
+        }
+    }
+
+    public class RemoveField
+    {
+        private readonly RemoveFieldFixture _fixture = new();
+
+        [Fact]
+        public void RemoveField_ShouldRemoveField()
+        {
+            // Arrange
+            _fixture.SetupInitialFields();
+            var sut = _fixture.CreateSut();
+            _fixture.SetupFieldToRemove(sut);
+            var parameterCount = sut.Fields.Count;
+
+            TestPropertyNotSetException.ThrowIfNull(_fixture.Field);
+
+            // Act
+            var result = sut.RemoveField(_fixture.Field);
+
+            // Assert
+            result.Should().Be(sut);
+            sut.Fields.Should().HaveCount(parameterCount - 1);
+            sut.Fields.Should().NotContain(_fixture.Field);
+        }
+
+        private class RemoveFieldFixture
+        {
+            private readonly ClassBuilder _builder = new();
+
+            public Field? Field { get; private set; }
+
+            public void SetupInitialFields()
+            {
+                _builder.WithFields(new FieldBuilder().CreateMany(3));
+            }
+
+            public void SetupFieldToRemove(Class cls)
+            {
+                Field = cls.Fields.ElementAt(1);
+            }
+
+            public Class CreateSut()
+            {
+                return _builder.Create();
+            }
+        }
+    }
+
     public class AddProperty
     {
         private readonly AddPropertyFixture _fixture = new();

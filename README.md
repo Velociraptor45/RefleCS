@@ -31,6 +31,7 @@ var file = new CsFile(
                 },
                 "App",
                 new List<Constructor>(),
+                new List<Field>(),
                 new List<Property>(),
                 new List<Method>
                 {

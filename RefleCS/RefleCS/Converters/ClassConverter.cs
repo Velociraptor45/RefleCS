@@ -6,6 +6,7 @@ namespace RefleCS.Converters;
 
 internal class ClassConverter
 {
+    private readonly FieldConverter _fieldConverter = new();
     private readonly PropertyConverter _propertyConverter = new();
     private readonly ConstructorConverter _constructorConverter = new();
     private readonly ModifierConverter _modifierConverter = new();
@@ -14,6 +15,9 @@ internal class ClassConverter
 
     public Class ToClass(ClassDeclarationSyntax classDeclaration)
     {
+        var fieldDeclarations = classDeclaration.DescendantNodes().OfType<FieldDeclarationSyntax>();
+        var fields = _fieldConverter.ToField(fieldDeclarations);
+
         var propertyDeclarations = classDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>();
         var properties = _propertyConverter.ToProperty(propertyDeclarations);
 
@@ -26,10 +30,10 @@ internal class ClassConverter
         var methods = _methodConverter.ToMethod(methodDeclarations);
 
         var baseTypes = classDeclaration.BaseList is null
-            ? Enumerable.Empty<BaseType>()
+            ? []
             : _baseTypeConverter.ToBaseType(classDeclaration.BaseList);
 
-        return new Class(modifiers, classDeclaration.Identifier.ToString(), ctors, properties, methods, baseTypes);
+        return new Class(modifiers, classDeclaration.Identifier.ToString(), ctors, fields, properties, methods, baseTypes);
     }
 
     public IEnumerable<Class> ToClass(IEnumerable<ClassDeclarationSyntax> classDeclarations)
@@ -43,6 +47,7 @@ internal class ClassConverter
     public ClassDeclarationSyntax ToNode(Class cls)
     {
         var ctors = _constructorConverter.ToNode(cls.Constructors);
+        var fields = _fieldConverter.ToNode(cls.Fields);
         var properties = _propertyConverter.ToNode(cls.Properties);
         var modifiers = _modifierConverter.ToNode(cls.Modifiers);
         var methods = _methodConverter.ToNode(cls.Methods);
@@ -51,6 +56,7 @@ internal class ClassConverter
         return SyntaxFactory.ClassDeclaration(cls.Name)
             .AddBaseListTypes(baseTypes.ToArray())
             .AddModifiers(modifiers.ToArray())
+            .AddMembers(fields.ToArray())
             .AddMembers(ctors.ToArray())
             .AddMembers(properties.ToArray())
             .AddMembers(methods.ToArray());

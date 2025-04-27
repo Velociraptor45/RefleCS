@@ -46,6 +46,19 @@ internal class ModifierConverter
         }
     }
 
+    public FieldModifier ToFieldModifier(SyntaxToken modifier)
+    {
+        return ToModifier<FieldModifier>(modifier);
+    }
+
+    public IEnumerable<FieldModifier> ToFieldModifier(IEnumerable<SyntaxToken> modifiers)
+    {
+        foreach (var modifier in modifiers)
+        {
+            yield return ToFieldModifier(modifier);
+        }
+    }
+
     public PropertyModifier ToPropertyModifier(SyntaxToken modifier)
     {
         return ToModifier<PropertyModifier>(modifier);
@@ -119,6 +132,11 @@ internal class ModifierConverter
     public SyntaxTokenList ToNode(IEnumerable<ConstructorModifier> modifiers)
     {
         return ToNode<ConstructorModifier>(modifiers);
+    }
+
+    public SyntaxTokenList ToNode(IEnumerable<FieldModifier> modifiers)
+    {
+        return ToNode<FieldModifier>(modifiers);
     }
 
     public SyntaxTokenList ToNode(IEnumerable<PropertyModifier> modifiers)

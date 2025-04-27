@@ -6,29 +6,26 @@ namespace RefleCS.Tests;
 
 public class CsFileCreatorTests
 {
-    private readonly CsFileHandler _sut;
-
-    public CsFileCreatorTests()
-    {
-        _sut = new CsFileHandler();
-    }
+    private readonly CsFileHandler _sut = new();
 
     [Fact]
     public void FromCode_WithCtor_ShouldReturnExpectedResult()
     {
         // Arrange
-        var content = @"using System;
-using System.Linq;
+        var content = """
+                      using System;
+                      using System.Linq;
 
-namespace MyApp;
+                      namespace MyApp;
 
-public sealed class App
-{
-    public App(int? id)
-    {
-        Id = id.Value;
-    }
-}";
+                      public sealed class App
+                      {
+                          public App(int? id)
+                          {
+                              Id = id.Value;
+                          }
+                      }
+                      """;
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -68,11 +65,12 @@ public sealed class App
                                     new("Id = id.Value;")
                                 })
                         },
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>(),
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -85,15 +83,17 @@ public sealed class App
     public void FromCode_WithPrivateSetProperty_ShouldReturnExpectedResult()
     {
         // Arrange
-        var content = @"using System;
-using System.Linq;
+        var content = """
+                      using System;
+                      using System.Linq;
 
-namespace MyApp;
+                      namespace MyApp;
 
-public class App
-{
-    public int MyProp { get; private set; }
-}";
+                      public class App
+                      {
+                          public int MyProp { get; private set; }
+                      }
+                      """;
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -109,6 +109,7 @@ public class App
                         new List<ClassModifier> { ClassModifier.Public },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>
                         {
                             new(
@@ -124,7 +125,101 @@ public class App
                         new List<Method>(),
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
+
+        // Act
+        var result = new CsFileHandler().FromCode(content);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void FromCode_WithFieldInitialized_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = """
+                      using System;
+                      using System.Linq;
+
+                      namespace MyApp;
+
+                      public class App
+                      {
+                          private int _myInt = 1;
+                      }
+                      """;
+
+        var expectedResult = new CsFile(
+            new List<Using>
+            {
+                new("System"),
+                new("System.Linq")
+            },
+            new Namespace(
+                "MyApp",
+                new List<Class>
+                {
+                    new(
+                        new List<ClassModifier> { ClassModifier.Public },
+                        "App",
+                        new List<Constructor>(),
+                        new List<Field>
+                        {
+                            new([FieldModifier.Private], "int", "_myInt", new("1"))
+                        },
+                        new List<Property>(),
+                        new List<Method>(),
+                        new List<BaseType>())
+                },
+                []));
+
+        // Act
+        var result = new CsFileHandler().FromCode(content);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void FromCode_WithFieldUninitialized_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = """
+                      using System;
+                      using System.Linq;
+
+                      namespace MyApp;
+
+                      public class App
+                      {
+                          private int _myInt;
+                      }
+                      """;
+
+        var expectedResult = new CsFile(
+            new List<Using>
+            {
+                new("System"),
+                new("System.Linq")
+            },
+            new Namespace(
+                "MyApp",
+                new List<Class>
+                {
+                    new(
+                        new List<ClassModifier> { ClassModifier.Public },
+                        "App",
+                        new List<Constructor>(),
+                        new List<Field>
+                        {
+                            new([FieldModifier.Private], "int", "_myInt", null)
+                        },
+                        new List<Property>(),
+                        new List<Method>(),
+                        new List<BaseType>())
+                },
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -149,21 +244,23 @@ public class App
     public void FromCode_WithMethod_ShouldReturnExpectedResult(string modifiers, MethodModifier[] expectedModifiers)
     {
         // Arrange
-        var content = @$"using System;
+        var content = $$"""
+                        using System;
 
-namespace MyApp;
+                        namespace MyApp;
 
-public sealed class App
-{{
-    // another comment ???
-    /*
-     * my other comment
-     */
-    {modifiers} void CheckIfTrue(bool bl)
-    {{
-        return bl;
-    }}
-}}";
+                        public sealed class App
+                        {
+                            // another comment ???
+                            /*
+                             * my other comment
+                             */
+                            {{modifiers}} void CheckIfTrue(bool bl)
+                            {
+                                return bl;
+                            }
+                        }
+                        """;
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -182,6 +279,7 @@ public sealed class App
                         },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>
                         {
@@ -207,7 +305,7 @@ public sealed class App
                         },
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -227,17 +325,19 @@ public sealed class App
         ParameterModifier[] expectedModifiers)
     {
         // Arrange
-        var content = @$"using System;
+        var content = $$"""
+                        using System;
 
-namespace MyApp;
+                        namespace MyApp;
 
-public sealed class App
-{{
-    void CheckIfTrue({modifiers} bool bl)
-    {{
-        return bl;
-    }}
-}}";
+                        public sealed class App
+                        {
+                            void CheckIfTrue({{modifiers}} bool bl)
+                            {
+                                return bl;
+                            }
+                        }
+                        """;
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -256,6 +356,7 @@ public sealed class App
                         },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>
                         {
@@ -278,7 +379,7 @@ public sealed class App
                         },
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -291,13 +392,15 @@ public sealed class App
     public void FromCode_WithSuperclass_ShouldReturnExpectedResult()
     {
         // Arrange
-        var content = @"using System;
+        var content = """
+                      using System;
 
-namespace MyApp;
+                      namespace MyApp;
 
-public sealed class App : AnotherApp<int>, IImplement
-{
-}";
+                      public sealed class App : AnotherApp<int>, IImplement
+                      {
+                      }
+                      """;
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -316,6 +419,7 @@ public sealed class App : AnotherApp<int>, IImplement
                         },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>(),
                         new List<BaseType>
@@ -324,7 +428,7 @@ public sealed class App : AnotherApp<int>, IImplement
                             new("IImplement")
                         })
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -337,18 +441,20 @@ public sealed class App : AnotherApp<int>, IImplement
     public void FromCode_WithRecord_ShouldReturnExpectedResult()
     {
         // Arrange
-        var content = @"using System;
+        var content = """
+                      using System;
 
-namespace MyApp;
+                      namespace MyApp;
 
-public record App(int Id)
-{
-    public App(int id, string name) : this(id)
-    {
-    }
-
-    public string Name { get; }
-}";
+                      public record App(int Id)
+                      {
+                          public App(int id, string name) : this(id)
+                          {
+                          }
+                      
+                          public string Name { get; }
+                      }
+                      """;
 
         var expectedResult = new CsFile(
             new List<Using>
@@ -357,7 +463,7 @@ public record App(int Id)
             },
             new Namespace(
                 "MyApp",
-                Enumerable.Empty<Class>(),
+                [],
                 new List<Record>
                 {
                     new(
