@@ -48,10 +48,10 @@ internal class RecordConverter
 
     public RecordDeclarationSyntax ToNode(Record recrd)
     {
-        var ctors = _constructorConverter.ToNode(recrd.Constructors);
-        var properties = _propertyConverter.ToNode(recrd.Properties);
+        var ctors = _constructorConverter.ToNode(recrd.Constructors).ToArray<MemberDeclarationSyntax>();
+        var properties = _propertyConverter.ToNode(recrd.Properties).ToArray<MemberDeclarationSyntax>();
         var modifiers = _modifierConverter.ToNode(recrd.Modifiers);
-        var methods = _methodConverter.ToNode(recrd.Methods);
+        var methods = _methodConverter.ToNode(recrd.Methods).ToArray<MemberDeclarationSyntax>();
         var baseTypes = _baseTypeConverter.ToNode(recrd.BaseTypes).ToArray();
         var parameters = _parameterConverter.ToNode(recrd.Parameters);
 
@@ -64,9 +64,9 @@ internal class RecordConverter
             .WithCloseBraceToken(closeBraceToken)
             .AddModifiers(modifiers.ToArray())
             .AddParameterListParameters(parameters.ToArray())
-            .AddMembers(ctors.ToArray())
-            .AddMembers(properties.ToArray())
-            .AddMembers(methods.ToArray());
+            .AddMembers(ctors)
+            .AddMembers(properties)
+            .AddMembers(methods);
 
         if (baseTypes.Any())
             node = node.AddBaseListTypes(baseTypes.ToArray());

@@ -11,6 +11,7 @@ public class CsFileConverterTestData : IEnumerable<object[]>
         yield return WithRecord();
         yield return WithClass();
         yield return WithClass_EmptyFieldInitializer();
+        yield return WithClass_NoBaseClass();
     }
 
     private object[] WithRecord()
@@ -144,6 +145,33 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                             new List<Property>(),
                             new List<Method>(),
                             new List<BaseType> { new("MyBaseClass") })
+                    },
+                    []))
+        ];
+    }
+
+    private object[] WithClass_NoBaseClass()
+    {
+        return
+        [
+            new CsFile(
+                new List<Using>
+                {
+                    new("System"),
+                    new("System.Linq")
+                },
+                new Namespace(
+                    "MyApp",
+                    new List<Class>
+                    {
+                        new(
+                            new List<ClassModifier> { ClassModifier.Private },
+                            "MyClass",
+                            new List<Constructor>(),
+                            new List<Field>(),
+                            new List<Property>(),
+                            new List<Method>(),
+                            new List<BaseType>())
                     },
                     []))
         ];

@@ -46,20 +46,24 @@ internal class ClassConverter
 
     public ClassDeclarationSyntax ToNode(Class cls)
     {
-        var ctors = _constructorConverter.ToNode(cls.Constructors);
-        var fields = _fieldConverter.ToNode(cls.Fields);
-        var properties = _propertyConverter.ToNode(cls.Properties);
+        var ctors = _constructorConverter.ToNode(cls.Constructors).ToArray<MemberDeclarationSyntax>();
+        var fields = _fieldConverter.ToNode(cls.Fields).ToArray<MemberDeclarationSyntax>();
+        var properties = _propertyConverter.ToNode(cls.Properties).ToArray<MemberDeclarationSyntax>();
         var modifiers = _modifierConverter.ToNode(cls.Modifiers);
-        var methods = _methodConverter.ToNode(cls.Methods);
-        var baseTypes = _baseTypeConverter.ToNode(cls.BaseTypes);
+        var methods = _methodConverter.ToNode(cls.Methods).ToArray<MemberDeclarationSyntax>();
+        var baseTypes = _baseTypeConverter.ToNode(cls.BaseTypes).ToArray();
 
-        return SyntaxFactory.ClassDeclaration(cls.Name)
-            .AddBaseListTypes(baseTypes.ToArray())
+        var classDeclaration = SyntaxFactory.ClassDeclaration(cls.Name)
             .AddModifiers(modifiers.ToArray())
-            .AddMembers(fields.ToArray())
-            .AddMembers(ctors.ToArray())
-            .AddMembers(properties.ToArray())
-            .AddMembers(methods.ToArray());
+            .AddMembers(fields)
+            .AddMembers(ctors)
+            .AddMembers(properties)
+            .AddMembers(methods);
+
+        if (baseTypes.Any())
+            classDeclaration = classDeclaration.AddBaseListTypes(baseTypes);
+
+        return classDeclaration;
     }
 
     public IEnumerable<ClassDeclarationSyntax> ToNode(IEnumerable<Class> classes)
