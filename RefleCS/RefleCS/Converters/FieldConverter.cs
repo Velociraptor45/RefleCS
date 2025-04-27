@@ -16,7 +16,7 @@ internal class FieldConverter
         var initializerString = field.Declaration.Variables.First().Initializer?.Value.ToString();
         FieldInitializer? initializer = initializerString is null
             ? null
-            : initializer = new FieldInitializer(initializerString);
+            : new FieldInitializer(initializerString);
 
         return new Field(modifiers, typeName, name, initializer);
     }
