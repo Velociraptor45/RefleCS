@@ -21,11 +21,11 @@ internal class NamespaceConverter
 
     public FileScopedNamespaceDeclarationSyntax ToNode(Namespace nmsp)
     {
-        var classes = _classConverter.ToNode(nmsp.Classes);
-        var records = _recordConverter.ToNode(nmsp.Records);
+        var classes = _classConverter.ToNode(nmsp.Classes).ToArray<MemberDeclarationSyntax>();
+        var records = _recordConverter.ToNode(nmsp.Records).ToArray<MemberDeclarationSyntax>();
 
         return SyntaxFactory.FileScopedNamespaceDeclaration(SyntaxFactory.IdentifierName(nmsp.Name))
-            .AddMembers(classes.ToArray())
-            .AddMembers(records.ToArray());
+            .AddMembers(classes)
+            .AddMembers(records);
     }
 }
