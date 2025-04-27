@@ -74,12 +74,12 @@ public class NamespaceTests
 
     private abstract class NamespaceFixture
     {
-        protected readonly List<Class> Classes = new();
+        protected readonly List<Class> Classes = [];
         protected string Name = string.Empty;
 
         public Namespace CreateSut()
         {
-            return new Namespace(Name, Classes, Enumerable.Empty<Record>());
+            return new Namespace(Name, Classes, []);
         }
     }
 }

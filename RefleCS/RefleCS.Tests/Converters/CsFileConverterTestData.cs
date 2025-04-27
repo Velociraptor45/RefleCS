@@ -14,13 +14,13 @@ public class CsFileConverterTestData : IEnumerable<object[]>
 
     private object[] WithRecord()
     {
-        return new object[]
-        {
+        return
+        [
             new CsFile(
                 new List<Using> { new("System") },
                 new Namespace(
                     "MyApp",
-                    Enumerable.Empty<Class>(),
+                    [],
                     new List<Record>
                     {
                         new(
@@ -49,13 +49,13 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                             new List<Method>(),
                             new List<BaseType>())
                     }))
-        };
+        ];
     }
 
     private object[] WithClass()
     {
-        return new object[]
-        {
+        return
+        [
             new CsFile(
                 new List<Using>
                 {
@@ -79,6 +79,10 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                                         ConstructorInitializerType.Base,
                                         new List<Argument> { new("ids") }),
                                     new List<Statement> { new("Console.Log(\"Hello, World!\");") })
+                            },
+                            new List<Field>
+                            {
+                                new([FieldModifier.Public], "string", "_myString", new("\"Test\""))
                             },
                             new List<Property>
                             {
@@ -110,8 +114,8 @@ public class CsFileConverterTestData : IEnumerable<object[]>
                             },
                             new List<BaseType> { new("MyBaseClass") })
                     },
-                    Enumerable.Empty<Record>()))
-        };
+                    []))
+        ];
     }
 
     IEnumerator IEnumerable.GetEnumerator()

@@ -68,11 +68,12 @@ public sealed class App
                                     new("Id = id.Value;")
                                 })
                         },
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>(),
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -109,6 +110,7 @@ public class App
                         new List<ClassModifier> { ClassModifier.Public },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>
                         {
                             new(
@@ -124,7 +126,97 @@ public class App
                         new List<Method>(),
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
+
+        // Act
+        var result = new CsFileHandler().FromCode(content);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void FromCode_WithFieldInitialized_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = @"using System;
+using System.Linq;
+
+namespace MyApp;
+
+public class App
+{
+    private int _myInt = 1;
+}";
+
+        var expectedResult = new CsFile(
+            new List<Using>
+            {
+                new("System"),
+                new("System.Linq")
+            },
+            new Namespace(
+                "MyApp",
+                new List<Class>
+                {
+                    new(
+                        new List<ClassModifier> { ClassModifier.Public },
+                        "App",
+                        new List<Constructor>(),
+                        new List<Field>
+                        {
+                            new([FieldModifier.Private], "int", "_myInt", new("1"))
+                        },
+                        new List<Property>(),
+                        new List<Method>(),
+                        new List<BaseType>())
+                },
+                []));
+
+        // Act
+        var result = new CsFileHandler().FromCode(content);
+
+        // Assert
+        result.Should().BeEquivalentTo(expectedResult);
+    }
+
+    [Fact]
+    public void FromCode_WithFieldUninitialized_ShouldReturnExpectedResult()
+    {
+        // Arrange
+        var content = @"using System;
+using System.Linq;
+
+namespace MyApp;
+
+public class App
+{
+    private int _myInt;
+}";
+
+        var expectedResult = new CsFile(
+            new List<Using>
+            {
+                new("System"),
+                new("System.Linq")
+            },
+            new Namespace(
+                "MyApp",
+                new List<Class>
+                {
+                    new(
+                        new List<ClassModifier> { ClassModifier.Public },
+                        "App",
+                        new List<Constructor>(),
+                        new List<Field>
+                        {
+                            new([FieldModifier.Private], "int", "_myInt", null)
+                        },
+                        new List<Property>(),
+                        new List<Method>(),
+                        new List<BaseType>())
+                },
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -182,6 +274,7 @@ public sealed class App
                         },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>
                         {
@@ -207,7 +300,7 @@ public sealed class App
                         },
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -256,6 +349,7 @@ public sealed class App
                         },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>
                         {
@@ -278,7 +372,7 @@ public sealed class App
                         },
                         new List<BaseType>())
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -316,6 +410,7 @@ public sealed class App : AnotherApp<int>, IImplement
                         },
                         "App",
                         new List<Constructor>(),
+                        new List<Field>(),
                         new List<Property>(),
                         new List<Method>(),
                         new List<BaseType>
@@ -324,7 +419,7 @@ public sealed class App : AnotherApp<int>, IImplement
                             new("IImplement")
                         })
                 },
-                Enumerable.Empty<Record>()));
+                []));
 
         // Act
         var result = new CsFileHandler().FromCode(content);
@@ -357,7 +452,7 @@ public record App(int Id)
             },
             new Namespace(
                 "MyApp",
-                Enumerable.Empty<Class>(),
+                [],
                 new List<Record>
                 {
                     new(

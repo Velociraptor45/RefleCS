@@ -27,7 +27,7 @@ public class ClassBuilder : TestBuilderBase<Class>
 
     public ClassBuilder WithEmptyModifiers()
     {
-        return WithModifiers(Enumerable.Empty<ClassModifier>());
+        return WithModifiers([]);
     }
 
     public ClassBuilder WithConstructors(IEnumerable<Constructor> constructors)
@@ -38,7 +38,18 @@ public class ClassBuilder : TestBuilderBase<Class>
 
     public ClassBuilder WithEmptyConstructors()
     {
-        return WithConstructors(Enumerable.Empty<Constructor>());
+        return WithConstructors([]);
+    }
+
+    public ClassBuilder WithFields(IEnumerable<Field> fields)
+    {
+        FillConstructorWith(nameof(fields), fields);
+        return this;
+    }
+
+    public ClassBuilder WithEmptyFields()
+    {
+        return WithFields([]);
     }
 
     public ClassBuilder WithProperties(IEnumerable<Property> properties)
@@ -49,7 +60,7 @@ public class ClassBuilder : TestBuilderBase<Class>
 
     public ClassBuilder WithEmptyProperties()
     {
-        return WithProperties(Enumerable.Empty<Property>());
+        return WithProperties([]);
     }
 
     public ClassBuilder WithMethods(IEnumerable<Method> methods)
@@ -60,7 +71,7 @@ public class ClassBuilder : TestBuilderBase<Class>
 
     public ClassBuilder WithEmptyMethods()
     {
-        return WithMethods(Enumerable.Empty<Method>());
+        return WithMethods([]);
     }
 
     public ClassBuilder WithBaseTypes(IEnumerable<BaseType> baseTypes)
@@ -71,6 +82,6 @@ public class ClassBuilder : TestBuilderBase<Class>
 
     public ClassBuilder WithEmptyBaseTypes()
     {
-        return WithBaseTypes(Enumerable.Empty<BaseType>());
+        return WithBaseTypes([]);
     }
 }
