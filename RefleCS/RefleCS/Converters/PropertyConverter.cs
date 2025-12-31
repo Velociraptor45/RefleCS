@@ -13,7 +13,7 @@ internal class PropertyConverter
     {
         var typeName = property.Type.ToString();
         var accessors = property.AccessorList is null
-            ? Enumerable.Empty<PropertyAccessor>()
+            ? []
             : property.AccessorList.Accessors
                 .Select(accessor => _propertyAccessorConverter.ToPropertyAccessor(accessor));
 

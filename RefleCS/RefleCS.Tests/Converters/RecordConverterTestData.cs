@@ -16,8 +16,8 @@ public class RecordConverterTestData : IEnumerable<object[]>
 
     private static object[] OnlyParameters()
     {
-        return new object[]
-        {
+        return
+        [
             new Record(
                 new List<ClassModifier> { ClassModifier.Public },
                 "App",
@@ -26,13 +26,13 @@ public class RecordConverterTestData : IEnumerable<object[]>
                 new List<Property>(),
                 new List<Method>(),
                 new List<BaseType>())
-        };
+        ];
     }
 
     private static object[] WithConstructor()
     {
-        return new object[]
-        {
+        return
+        [
             new Record(
                 new List<ClassModifier> { ClassModifier.Public },
                 "App",
@@ -58,13 +58,13 @@ public class RecordConverterTestData : IEnumerable<object[]>
                 },
                 new List<Method>(),
                 new List<BaseType>())
-        };
+        ];
     }
 
     private static object[] WithMethods()
     {
-        return new object[]
-        {
+        return
+        [
             new Record(
                 new List<ClassModifier> { ClassModifier.Public },
                 "App",
@@ -98,13 +98,13 @@ public class RecordConverterTestData : IEnumerable<object[]>
                         new List<Statement> { new("nextVal = Ids.First()") })
                 },
                 new List<BaseType>())
-        };
+        ];
     }
 
     private static object[] WithBaseType()
     {
-        return new object[]
-        {
+        return
+        [
             new Record(
                 new List<ClassModifier> { ClassModifier.Public },
                 "App",
@@ -116,7 +116,7 @@ public class RecordConverterTestData : IEnumerable<object[]>
                 {
                     new("MyBaseApp")
                 })
-        };
+        ];
     }
 
     IEnumerator IEnumerable.GetEnumerator()

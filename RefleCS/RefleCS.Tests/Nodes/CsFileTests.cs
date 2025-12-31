@@ -59,11 +59,11 @@ public class CsFileTests
 
             public void SetupExistingUsing()
             {
-                Usings = new List<Using>
-                {
+                Usings =
+                [
                     new("a"),
-                    new("b"),
-                };
+                    new("b")
+                ];
 
                 ExistingUsing = new("a");
 
@@ -76,11 +76,11 @@ public class CsFileTests
 
             public void SetupNonExistingUsing()
             {
-                Usings = new List<Using>
-                {
+                Usings =
+                [
                     new("a"),
-                    new("b"),
-                };
+                    new("b")
+                ];
 
                 NonExistingUsing = new("c");
 
@@ -147,11 +147,11 @@ public class CsFileTests
 
             public void SetupExistingUsing()
             {
-                Usings = new List<Using>
-                {
+                Usings =
+                [
                     new("a"),
-                    new("b"),
-                };
+                    new("b")
+                ];
 
                 ExistingUsing = new("a");
 
@@ -163,11 +163,11 @@ public class CsFileTests
 
             public void SetupNonExistingUsing()
             {
-                Usings = new List<Using>
-                {
+                Usings =
+                [
                     new("a"),
-                    new("b"),
-                };
+                    new("b")
+                ];
 
                 NonExistingUsing = new("c");
 
@@ -228,13 +228,13 @@ public class CsFileTests
 
             public void SetupUnorderedUsings()
             {
-                Usings = new List<Using>
-                {
+                Usings =
+                [
                     new("aa"),
                     new("a"),
                     new("1a"),
-                    new("b"),
-                };
+                    new("b")
+                ];
 
                 ExpectedResult = new List<Using>
                 {
@@ -295,13 +295,13 @@ public class CsFileTests
 
             public void SetupUnorderedUsings()
             {
-                Usings = new List<Using>
-                {
+                Usings =
+                [
                     new("aa"),
                     new("a"),
                     new("1a"),
-                    new("b"),
-                };
+                    new("b")
+                ];
 
                 ExpectedResult = new List<Using>
                 {
@@ -329,7 +329,7 @@ public class CsFileTests
 
         public void SetupNamespaceEmpty()
         {
-            _namespace = new Namespace("MyNamespace", new List<Class>(), Enumerable.Empty<Record>());
+            _namespace = new Namespace("MyNamespace", new List<Class>(), []);
         }
     }
 }

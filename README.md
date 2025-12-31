@@ -1,6 +1,6 @@
 # RefleCS
 
-![Nuget](https://img.shields.io/nuget/dt/RefleCS)
+[![Nuget](https://img.shields.io/nuget/dt/RefleCS)](https://www.nuget.org/packages/RefleCS)
 
 ## Description
 RefleCS is a library that sits in front of the Roslyn C# parser and makes it easier to create new or edit existing C# files that are outside of an Assembly context.
@@ -31,6 +31,7 @@ var file = new CsFile(
                 },
                 "App",
                 new List<Constructor>(),
+                new List<Field>(),
                 new List<Property>(),
                 new List<Method>
                 {

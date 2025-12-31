@@ -6,6 +6,7 @@ namespace RefleCS.Converters;
 
 internal class ClassConverter
 {
+    private readonly FieldConverter _fieldConverter = new();
     private readonly PropertyConverter _propertyConverter = new();
     private readonly ConstructorConverter _constructorConverter = new();
     private readonly ModifierConverter _modifierConverter = new();
@@ -14,6 +15,9 @@ internal class ClassConverter
 
     public Class ToClass(ClassDeclarationSyntax classDeclaration)
     {
+        var fieldDeclarations = classDeclaration.DescendantNodes().OfType<FieldDeclarationSyntax>();
+        var fields = _fieldConverter.ToField(fieldDeclarations);
+
         var propertyDeclarations = classDeclaration.DescendantNodes().OfType<PropertyDeclarationSyntax>();
         var properties = _propertyConverter.ToProperty(propertyDeclarations);
 
@@ -26,10 +30,10 @@ internal class ClassConverter
         var methods = _methodConverter.ToMethod(methodDeclarations);
 
         var baseTypes = classDeclaration.BaseList is null
-            ? Enumerable.Empty<BaseType>()
+            ? []
             : _baseTypeConverter.ToBaseType(classDeclaration.BaseList);
 
-        return new Class(modifiers, classDeclaration.Identifier.ToString(), ctors, properties, methods, baseTypes);
+        return new Class(modifiers, classDeclaration.Identifier.ToString(), ctors, fields, properties, methods, baseTypes);
     }
 
     public IEnumerable<Class> ToClass(IEnumerable<ClassDeclarationSyntax> classDeclarations)
@@ -42,18 +46,24 @@ internal class ClassConverter
 
     public ClassDeclarationSyntax ToNode(Class cls)
     {
-        var ctors = _constructorConverter.ToNode(cls.Constructors);
-        var properties = _propertyConverter.ToNode(cls.Properties);
+        var ctors = _constructorConverter.ToNode(cls.Constructors).ToArray<MemberDeclarationSyntax>();
+        var fields = _fieldConverter.ToNode(cls.Fields).ToArray<MemberDeclarationSyntax>();
+        var properties = _propertyConverter.ToNode(cls.Properties).ToArray<MemberDeclarationSyntax>();
         var modifiers = _modifierConverter.ToNode(cls.Modifiers);
-        var methods = _methodConverter.ToNode(cls.Methods);
-        var baseTypes = _baseTypeConverter.ToNode(cls.BaseTypes);
+        var methods = _methodConverter.ToNode(cls.Methods).ToArray<MemberDeclarationSyntax>();
+        var baseTypes = _baseTypeConverter.ToNode(cls.BaseTypes).ToArray();
 
-        return SyntaxFactory.ClassDeclaration(cls.Name)
-            .AddBaseListTypes(baseTypes.ToArray())
+        var classDeclaration = SyntaxFactory.ClassDeclaration(cls.Name)
             .AddModifiers(modifiers.ToArray())
-            .AddMembers(ctors.ToArray())
-            .AddMembers(properties.ToArray())
-            .AddMembers(methods.ToArray());
+            .AddMembers(fields)
+            .AddMembers(ctors)
+            .AddMembers(properties)
+            .AddMembers(methods);
+
+        if (baseTypes.Any())
+            classDeclaration = classDeclaration.AddBaseListTypes(baseTypes);
+
+        return classDeclaration;
     }
 
     public IEnumerable<ClassDeclarationSyntax> ToNode(IEnumerable<Class> classes)

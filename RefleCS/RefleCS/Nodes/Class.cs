@@ -9,6 +9,7 @@ public class Class
 {
     private readonly List<Method> _methods;
     private readonly List<Constructor> _constructors;
+    private readonly List<Field> _fields;
     private readonly List<Property> _properties;
     private readonly List<BaseType> _baseTypes;
     private readonly List<ClassModifier> _modifiers;
@@ -19,11 +20,12 @@ public class Class
     public Class(string name)
     {
         Name = name;
-        _methods = new List<Method>();
-        _constructors = new List<Constructor>();
-        _properties = new List<Property>();
-        _baseTypes = new List<BaseType>();
-        _modifiers = new List<ClassModifier>();
+        _methods = [];
+        _constructors = [];
+        _properties = [];
+        _baseTypes = [];
+        _modifiers = [];
+        _fields = [];
     }
 
     /// <summary>
@@ -31,11 +33,13 @@ public class Class
     /// <param name="modifiers"></param>
     /// <param name="name"></param>
     /// <param name="constructors"></param>
+    /// <param name="fields"></param>
     /// <param name="properties"></param>
     /// <param name="methods"></param>
     /// <param name="baseTypes"></param>
     public Class(IEnumerable<ClassModifier> modifiers, string name, IEnumerable<Constructor> constructors,
-        IEnumerable<Property> properties, IEnumerable<Method> methods, IEnumerable<BaseType> baseTypes)
+        IEnumerable<Field> fields, IEnumerable<Property> properties, IEnumerable<Method> methods,
+        IEnumerable<BaseType> baseTypes)
     {
         _modifiers = modifiers.ToList();
         Name = name;
@@ -43,6 +47,7 @@ public class Class
         _methods = methods.ToList();
         _constructors = constructors.ToList();
         _properties = properties.ToList();
+        _fields = fields.ToList();
     }
 
     /// <summary>
@@ -64,6 +69,11 @@ public class Class
     /// The constructors in the class.
     /// </summary>
     public IReadOnlyCollection<Constructor> Constructors => _constructors;
+
+    /// <summary>
+    /// The fields in the class.
+    /// </summary>
+    public IReadOnlyCollection<Field> Fields => _fields;
 
     /// <summary>
     /// The properties in the class.
@@ -138,6 +148,28 @@ public class Class
     public Class RemoveMethod(Method method)
     {
         _methods.Remove(method);
+        return this;
+    }
+
+    /// <summary>
+    /// Adds a field to the class.
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns></returns>
+    public Class AddField(Field field)
+    {
+        _fields.Add(field);
+        return this;
+    }
+
+    /// <summary>
+    /// Removes a field from the class.
+    /// </summary>
+    /// <param name="field"></param>
+    /// <returns></returns>
+    public Class RemoveField(Field field)
+    {
+        _fields.Remove(field);
         return this;
     }
 
