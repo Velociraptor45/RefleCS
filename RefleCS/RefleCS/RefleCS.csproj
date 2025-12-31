@@ -8,7 +8,7 @@
     <Authors>Velociraptor45</Authors>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
-    <Version>0.3.0-alpha.2</Version>
+    <Version>0.3.0</Version>
     <RepositoryUrl>https://github.com/Velociraptor45/RefleCS</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
